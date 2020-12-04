@@ -1,13 +1,12 @@
-package aoc2020.day1;
+package aoc2020;
 
-import aoc2020.Util;
 import aoc2020.Util.Triple;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class Main {
+public class Day1 {
 
     private static int[] left;
     private static int[] right;
@@ -15,7 +14,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Optional<Stream<String>> input = Util.readFile(Main.class, "input.txt");
+        Optional<Stream<String>> input = Util.readFile(Day1.class, "input1.txt");
 
         if (input.isPresent()) {
 

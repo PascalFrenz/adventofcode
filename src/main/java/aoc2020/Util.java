@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public class Util {
 
     public static <T> Optional<Stream<String>> readFile(Class<T> tClass, final String name) {
-        return Optional.ofNullable(tClass.getResource(name))
+        return Optional.ofNullable(tClass.getResource("/" + name))
                 .map(url -> {
                     try {
                         return url.toURI();

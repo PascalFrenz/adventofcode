@@ -1,12 +1,10 @@
-package aoc2020.day2;
-
-import aoc2020.Util;
+package aoc2020;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class Main {
+public class Day2 {
 
     private static class PasswordRule {
 
@@ -44,7 +42,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        final Optional<Stream<String>> inputA = Util.readFile(Main.class, "input.txt");
+        final Optional<Stream<String>> inputA = Util.readFile(Day2.class, "input2.txt");
 
         inputA.ifPresent(stringStream -> {
             long validPasswordCount = stringStream
@@ -55,7 +53,7 @@ public class Main {
             System.out.printf("Es wurden %d valide Passwörter gefunden (Sled Rental Place)\n", validPasswordCount);
         });
 
-        final Optional<Stream<String>> inputB = Util.readFile(Main.class, "input.txt");
+        final Optional<Stream<String>> inputB = Util.readFile(Day2.class, "input4.txt");
 
         inputB.ifPresent(stringStream -> {
             long validPasswordCount = stringStream

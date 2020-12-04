@@ -1,17 +1,15 @@
-package aoc2020.day3;
-
-import aoc2020.Util;
+package aoc2020;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Main {
+public class Day3 {
 
     private static final char TREE = '#';
 
     public static void main(String[] args) {
-        final List<char[]> forest = Util.readFile(Main.class, "input.txt")
+        final List<char[]> forest = Util.readFile(Day3.class, "input3.txt")
                 .map(stream -> stream.map(String::toCharArray))
                 .map(stream -> stream.collect(Collectors.toList()))
                 .orElse(new ArrayList<>());
