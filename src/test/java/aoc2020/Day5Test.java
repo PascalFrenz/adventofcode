@@ -1,6 +1,5 @@
 package aoc2020;
 
-import aoc2020.day5.BoardingPass;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,29 +8,29 @@ class Day5Test {
 
     @Test
     void testReadBoardingPass_GivenExamples() {
-        assertEquals(new BoardingPass(44, 5), BoardingPass.from("FBFBBFFRLR"));
-        assertEquals(new BoardingPass(70, 7), BoardingPass.from("BFFFBBFRRR"));
-        assertEquals(new BoardingPass(14, 7), BoardingPass.from("FFFBBBFRRR"));
-        assertEquals(new BoardingPass(102, 4), BoardingPass.from("BBFFBBFRLL"));
+        assertEquals(new Day5.BoardingPass(44, 5), Day5.BoardingPass.from("FBFBBFFRLR"));
+        assertEquals(new Day5.BoardingPass(70, 7), Day5.BoardingPass.from("BFFFBBFRRR"));
+        assertEquals(new Day5.BoardingPass(14, 7), Day5.BoardingPass.from("FFFBBBFRRR"));
+        assertEquals(new Day5.BoardingPass(102, 4), Day5.BoardingPass.from("BBFFBBFRLL"));
     }
 
     @Test
     void testReadBoardingPass_InputValidation() {
         assertDoesNotThrow(() -> {
-            BoardingPass.from("BFFFBBFRRR");
+            Day5.BoardingPass.from("BFFFBBFRRR");
         });
         assertDoesNotThrow(() -> {
-            BoardingPass.from("FFFBBBFRRR");
+            Day5.BoardingPass.from("FFFBBBFRRR");
         });
         assertDoesNotThrow(() -> {
-            BoardingPass.from("BBFFBBFRLL");
+            Day5.BoardingPass.from("BBFFBBFRLL");
         });
 
-        assertThrows(IllegalArgumentException.class, () -> BoardingPass.from("BFFFBBFRRa")); // wrong char in last 3
-        assertThrows(IllegalArgumentException.class, () -> BoardingPass.from("FFFBBFRRL")); // too short
-        assertThrows(IllegalArgumentException.class, () -> BoardingPass.from("BFFFBBFRBL")); // wrong char in last 3
-        assertThrows(IllegalArgumentException.class, () -> BoardingPass.from("BFFFBBFRRLL")); // too long
-        assertThrows(IllegalArgumentException.class, () -> BoardingPass.from("BFFFBBFRRLa")); // too long and wrong char
+        assertThrows(IllegalArgumentException.class, () -> Day5.BoardingPass.from("BFFFBBFRRa")); // wrong char in last 3
+        assertThrows(IllegalArgumentException.class, () -> Day5.BoardingPass.from("FFFBBFRRL")); // too short
+        assertThrows(IllegalArgumentException.class, () -> Day5.BoardingPass.from("BFFFBBFRBL")); // wrong char in last 3
+        assertThrows(IllegalArgumentException.class, () -> Day5.BoardingPass.from("BFFFBBFRRLL")); // too long
+        assertThrows(IllegalArgumentException.class, () -> Day5.BoardingPass.from("BFFFBBFRRLa")); // too long and wrong char
     }
 
     @Test
