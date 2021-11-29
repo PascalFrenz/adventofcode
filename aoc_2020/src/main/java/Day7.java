@@ -1,5 +1,3 @@
-package aoc2020;
-
 import lombok.Value;
 
 import java.util.*;

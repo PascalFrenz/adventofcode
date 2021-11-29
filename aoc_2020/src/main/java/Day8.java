@@ -1,5 +1,3 @@
-package aoc2020;
-
 import lombok.Getter;
 
 import java.util.Arrays;

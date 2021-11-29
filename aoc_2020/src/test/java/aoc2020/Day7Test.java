@@ -1,6 +1,6 @@
 package aoc2020;
 
-import aoc2020.Day7.Bag;
+import Day7.Bag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,4 @@
-package aoc2020;
-
-import aoc2020.Util.Triple;
+import Util.Triple;
 
 import java.util.Arrays;
 import java.util.Optional;
