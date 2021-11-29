@@ -1,6 +1,3 @@
-package aoc2020;
-
-import Day7.Bag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,14 +29,14 @@ class Day7Test {
 
     @Test
     void testFindBag() {
-        final Map<String, Bag> bagMap = Day7.getBagMap(exampleInput);
+        final Map<String, Day7.Bag> bagMap = Day7.getBagMap(exampleInput);
         final Set<String> actual = Day7.findBags("shiny gold", bagMap, new HashSet<>());
         assertEquals(4, actual.size());
     }
 
     @Test
     void testCountInnerBags() {
-        final Map<String, Bag> bagMap = Day7.getBagMap(exampleInput);
+        final Map<String, Day7.Bag> bagMap = Day7.getBagMap(exampleInput);
         final long actual = Day7.countInnerBags("shiny gold", bagMap);
         assertEquals(32, actual);
     }

@@ -4,17 +4,7 @@ import java.util.stream.Stream;
 
 public class Day2 {
 
-    private static class PasswordRule {
-
-        public final int min;
-        public final int max;
-        public final char character;
-
-        public PasswordRule(int min, int max, char character) {
-            this.min = min;
-            this.max = max;
-            this.character = character;
-        }
+    private record PasswordRule(int min, int max, char character) {
 
         public boolean validate_sledRentalPlace(final String password) {
             int numOfChars = password.replaceAll("[^" + character + "]", "").length();
