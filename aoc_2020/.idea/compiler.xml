@@ -11,5 +11,6 @@
         <module name="aoc_2020.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="11" />
   </component>
 </project>

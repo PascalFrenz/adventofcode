@@ -1,4 +1,4 @@
-import Util.Triple;
+
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -18,22 +18,22 @@ public class Day1 {
 
             initIterationArrays(input.get());
 
-            final Triple<Integer, Integer, Integer> result = findPair();
+            final Util.Triple<Integer, Integer, Integer> result = findPair();
 
             System.out.printf("Ergebnistupel: %s\n", result.toString());
             System.out.printf("Multipliziert: %d\n", result.getLeft() * result.getRight() * result.getCenter());
         }
     }
 
-    private static Triple<Integer, Integer, Integer> findPair() {
-        Optional<Triple<Integer, Integer, Integer>> result = Optional.empty();
+    private static Util.Triple<Integer, Integer, Integer> findPair() {
+        Optional<Util.Triple<Integer, Integer, Integer>> result = Optional.empty();
         for (int i = 0; i < left.length && result.isEmpty(); i++) {
             int l = left[i];
             for (int j = 0; j < right.length && result.isEmpty(); j++) {
                 int r = right[j];
                 result = Arrays.stream(center)
                         .filter(c -> l + r + c == 2020)
-                        .mapToObj(c -> Triple.of(l, c, r))
+                        .mapToObj(c -> Util.Triple.of(l, c, r))
                         .findFirst();
             }
         }
