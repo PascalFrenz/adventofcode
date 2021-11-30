@@ -2,8 +2,15 @@ use std::{fs};
 use std::collections::HashMap;
 use std::time::Instant;
 
+use crate::practice::{FerryTerminal, FerryTerminalState};
+use crate::util::read_input_file;
+
+mod practice;
+mod util;
+
 fn main() {
     task_10();
+    task_11();
 }
 
 fn task_10() {
@@ -46,11 +53,36 @@ fn sort_asc(numbers: &mut Vec<i32>) {
     numbers.sort();
 }
 
-fn append_outlet_and_built_in_charger(mut numbers: &mut Vec<i32>) {
+fn append_outlet_and_built_in_charger(numbers: &mut Vec<i32>) {
     numbers.append(&mut vec![0]);
     numbers.append(&mut vec![numbers.last().unwrap() + 3]);
 }
 
 fn parse_to_vector(contents: String) -> Vec<i32> {
     contents.lines().map(|s| s.parse().unwrap()).collect::<Vec<i32>>()
+}
+
+fn task_11() {
+    let start = Instant::now();
+    let input = read_input_file("resources/input11.txt");
+    let result_state = calculate_stable_state(&input);
+    println!("Result: {} occupied seats", result_state.occupied_seats());
+
+    let end = Instant::now();
+    println!("took {:?}ms", end.duration_since(start).as_millis());
+}
+
+fn calculate_stable_state(input: &String) -> FerryTerminal {
+    let mut iterations = 0;
+    let mut current_state = FerryTerminal::new(&input);
+    let mut state_changed = true;
+    while state_changed {
+        let next_state = current_state.compute_next_state();
+        state_changed = current_state.occupied_seats() != next_state.occupied_seats();
+        current_state = if state_changed { next_state } else { current_state };
+        iterations += 1;
+    }
+    println!("DONE! took {} iterations", iterations);
+
+    return current_state;
 }
