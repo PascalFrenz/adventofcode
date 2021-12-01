@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 use std::fs;
 use std::time::Instant;
-use crate::read_input_file;
 use crate::util::read_input_file;
 
 type SeatingArea = Vec<Vec<char>>;
@@ -112,9 +111,10 @@ fn count_seats(area: &SeatingArea, seat: &char) -> usize {
         .expect("Could not unwrap result count");
 }
 
+#[allow(dead_code)]
 pub fn task_10() {
     let start = Instant::now();
-    let filename = "resources/input10.txt";
+    let filename = "resources/input10_2020.txt";
     println!("...reading contents of: {}", filename);
     let contents = fs::read_to_string(filename).expect("Something went wrong while reading the file");
     let done_reading_file = Instant::now();
@@ -161,9 +161,10 @@ fn parse_to_vector(contents: String) -> Vec<i32> {
     contents.lines().map(|s| s.parse().unwrap()).collect::<Vec<i32>>()
 }
 
+#[allow(dead_code)]
 pub fn task_11() {
     let start = Instant::now();
-    let input = read_input_file("resources/input11.txt");
+    let input = read_input_file("resources/input11_2020.txt");
     let result_state = calculate_stable_state(&input);
     println!("Result: {} occupied seats", result_state.occupied_seats());
 
