@@ -1,15 +1,21 @@
+use std::fmt::Debug;
+
 mod practice_2020;
 mod util;
 mod day_1;
 mod day_2;
+mod day_3;
 
 fn main() {
-    let input_1 = util::read_input_file("resources/input1.txt");
-    println!("Result for day 1, task a: {:?}", day_1::task_a(&input_1));
-    println!("Result for day 1, task b: {:?}", day_1::task_b(&input_1));
-    let input_2 = util::read_input_file("resources/input2.txt");
-    println!("Result for day 2, task a: {:?}", day_2::task_a(&input_2));
-    println!("Result for day 2, task b: {:?}", day_2::task_b(&input_2));
+    execute_day(1, day_1::task_a, day_1::task_b);
+    execute_day(2, day_2::task_a, day_2::task_b);
+    execute_day(3, day_3::task_a, day_3::task_b);
+}
+
+fn execute_day<T>(day: usize, a: fn(&str) -> T, b: fn(&str) -> T) where T: Debug {
+    let input = util::read_input_file(&format!("resources/input{:?}.txt", day));
+    println!("Result for day {:?}, task a: {:?}", day, a(&input));
+    println!("Result for day {:?}, task b: {:?}", day, b(&input));
 }
 
 
