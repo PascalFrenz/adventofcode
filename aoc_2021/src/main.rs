@@ -8,6 +8,7 @@ mod day_3;
 mod day_4;
 mod day_5;
 mod day_6;
+mod day_7;
 
 fn main() {
     execute_day(1, day_1::task_a, day_1::task_b);
@@ -16,6 +17,7 @@ fn main() {
     //execute_day(4, day_4::task_a, day_4::task_b);
     execute_day(5, day_5::task_a, day_5::task_b);
     execute_day(6, day_6::task_a, day_6::task_b);
+    execute_day(7, day_7::task_a, day_7::task_b);
 }
 
 fn execute_day<T>(day: usize, a: fn(&str) -> T, b: fn(&str) -> T) where T: Debug {
