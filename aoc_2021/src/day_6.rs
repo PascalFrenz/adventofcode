@@ -1,7 +1,11 @@
 use std::collections::HashMap;
 use std::ops::Add;
 
-pub fn task_a(input: &str) -> u64 {
+type FishCount = u64;
+type Day = u8;
+type FishMap = HashMap<Day, FishCount>;
+
+pub fn task_a(input: &str) -> FishCount {
     let mut lanternfishs = parse_input(input);
 
     for _ in 0..80 {
@@ -11,7 +15,7 @@ pub fn task_a(input: &str) -> u64 {
     return lanternfishs.iter().fold(0, |sum, (_, &v)| sum + v);
 }
 
-pub fn task_b(input: &str) -> u64 {
+pub fn task_b(input: &str) -> FishCount {
     let mut lanternfishs = parse_input(input);
 
     for _ in 0..256 {
@@ -20,7 +24,7 @@ pub fn task_b(input: &str) -> u64 {
     return lanternfishs.iter().fold(0, |sum, (_, &v)| sum + v);
 }
 
-fn calc_next_gen(lanternfishs: HashMap<u8, u64>) -> HashMap<u8, u64> {
+fn calc_next_gen(lanternfishs: FishMap) -> FishMap {
     return HashMap::from([
         (0, *lanternfishs.get(&1).unwrap()),
         (1, *lanternfishs.get(&2).unwrap()),
@@ -34,8 +38,8 @@ fn calc_next_gen(lanternfishs: HashMap<u8, u64>) -> HashMap<u8, u64> {
     ]);
 }
 
-fn parse_input(input: &str) -> HashMap<u8, u64> {
-    let init_hashmap: HashMap<u8, u64> = HashMap::from([(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0), (8, 0)]);
+fn parse_input(input: &str) -> FishMap {
+    let init_hashmap: FishMap = HashMap::from([(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0), (8, 0)]);
 
     return input.trim()
         .split(",")
