@@ -22,7 +22,7 @@ fn main() {
     execute_day(8, day_8::task_a, day_8::task_b);
 }
 
-fn execute_day<T>(day: usize, a: fn(&str) -> T, b: fn(&str) -> T) where T: Debug {
+fn execute_day<T, R>(day: usize, a: fn(&str) -> T, b: fn(&str) -> R) where T: Debug, R: Debug {
     let input = util::read_input_file(&format!("resources/input{:?}.txt", day));
     println!("Result for day {:?}, task a: {:?}", day, a(&input));
     println!("Result for day {:?}, task b: {:?}", day, b(&input));
