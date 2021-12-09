@@ -1,4 +1,5 @@
 use std::fmt::Debug;
+use std::time::Instant;
 
 mod practice_2020;
 mod util;
@@ -10,16 +11,21 @@ mod day_5;
 mod day_6;
 mod day_7;
 mod day_8;
+mod day_9;
 
 fn main() {
+    let start = Instant::now();
     execute_day(1, day_1::task_a, day_1::task_b);
     execute_day(2, day_2::task_a, day_2::task_b);
     execute_day(3, day_3::task_a, day_3::task_b);
-    //execute_day(4, day_4::task_a, day_4::task_b);
+    execute_day(4, day_4::task_a, day_4::task_b);
     execute_day(5, day_5::task_a, day_5::task_b);
     execute_day(6, day_6::task_a, day_6::task_b);
     execute_day(7, day_7::task_a, day_7::task_b);
     execute_day(8, day_8::task_a, day_8::task_b);
+    execute_day(9, day_9::task_a, day_9::task_b);
+    let end = Instant::now();
+    eprintln!("duration = {:#?}", end.duration_since(start));
 }
 
 fn execute_day<T, R>(day: usize, a: fn(&str) -> T, b: fn(&str) -> R) where T: Debug, R: Debug {
