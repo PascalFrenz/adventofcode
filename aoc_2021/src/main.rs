@@ -13,6 +13,7 @@ mod day_7;
 mod day_8;
 mod day_9;
 mod day_10;
+mod day_11;
 
 fn main() {
     let start = Instant::now();
@@ -26,14 +27,15 @@ fn main() {
     execute_day(8, day_8::task_a, day_8::task_b);
     execute_day(9, day_9::task_a, day_9::task_b);
     execute_day(10, day_10::task_a, day_10::task_b);
+    execute_day(11, day_11::task_a, day_11::task_b);
     let end = Instant::now();
     eprintln!("duration = {:#?}", end.duration_since(start));
 }
 
 fn execute_day<T, R>(day: usize, a: fn(&str) -> T, b: fn(&str) -> R) where T: Debug, R: Debug {
     let input = util::read_input_file(&format!("resources/input{:?}.txt", day));
-    println!("Result for day {:?}, task a: {:?}", day, a(&input));
-    println!("Result for day {:?}, task b: {:?}", day, b(&input));
+    println!("Result for day {:?}, task a: {:?}", day, a(input.trim()));
+    println!("Result for day {:?}, task b: {:?}", day, b(input.trim()));
 }
 
 
