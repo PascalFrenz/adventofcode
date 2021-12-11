@@ -13,78 +13,90 @@ pub fn task_a(input: &str) -> usize {
 
 pub fn task_b(input: &str) -> usize {
     input.lines()
-        .map(|line| {
-            let mut split = line.split(" | ");
-            let parts = (
-                split.next().map(|x| x.split(" ").collect::<Vec<&str>>()).unwrap(),
-                split.last().map(|x| x.split(" ").collect::<Vec<&str>>()).unwrap()
-            );
-            parts
-        })
-        .map(|(notes, number_strs)| {
-            let mut numbers: HashMap<u8, &str> = HashMap::new();
-            for note in notes.clone() {
-                if note.len() == 2 {
-                    numbers.insert(1, note);
-                } else if note.len() == 4 {
-                    numbers.insert(4, note);
-                } else if note.len() == 3 {
-                    numbers.insert(7, note);
-                } else if note.len() == 7 {
-                    numbers.insert(8, note);
-                }
-            }
+        .map(|line| split_into_parts(line))
+        .map(|(notes, output)| {
+            let numbers = decode_numbers_from(notes);
+            let lookup = create_lookup_table(numbers);
 
-            for note in notes.clone() {
-                if note.len() == 6 {
-                    let common_count_to_four = calc_common_to(&4, note, &numbers);
-                    if common_count_to_four == 4 {
-                        numbers.insert(9, note);
-                    } else {
-                        let common_count_to_one = calc_common_to(&1, note, &numbers);
-                        if common_count_to_one == 2 {
-                            numbers.insert(0, note);
-                        } else {
-                            numbers.insert(6, note);
-                        }
-                    }
-                } else if note.len() == 5 {
-                    let common_count_to_one = calc_common_to(&1, note, &numbers);
-                    if common_count_to_one == 2 {
-                        numbers.insert(3, note);
-                    } else {
-                        let common_count_to_four = calc_common_to(&4, note, &numbers);
-                        if common_count_to_four == 3 {
-                            numbers.insert(5, note);
-                        } else {
-                            numbers.insert(2, note);
-                        }
-                    }
-                }
-            }
-
-            let lookup: HashMap<String, u8> = numbers.iter().clone()
-                .map(|(n, str)| (str, n))
-                .fold(HashMap::new(), |mut acc, (&key, &val)| {
-                    let mut key_arr: Vec<char> = key.chars().collect();
-                    key_arr.sort_by(|a, b| a.cmp(b));
-                    let key_sorted = key_arr.into_iter().collect();
-                    acc.insert(key_sorted, val);
-                    acc
-                });
-
-            number_strs.iter()
-                .map(|&s| {
-                    let mut s_arr: Vec<char> = s.chars().collect();
-                    s_arr.sort_by(|a, b| a.cmp(b));
-                    s_arr.into_iter().collect::<String>()
-                })
-                .map(|str| {
-                    lookup.get(&str).unwrap()
-                })
-                .fold(0usize, |acc, &val| acc * 10 + usize::from(val))
+            decode_output_val(output, lookup)
         })
         .sum()
+}
+
+fn split_into_parts(line: &str) -> (Vec<&str>, Vec<&str>) {
+    let mut split = line.split(" | ");
+    let parts = (
+        split.next().map(|x| x.split(" ").collect::<Vec<&str>>()).unwrap(),
+        split.last().map(|x| x.split(" ").collect::<Vec<&str>>()).unwrap()
+    );
+    parts
+}
+
+fn decode_output_val(number_strs: Vec<&str>, lookup: HashMap<String, u8>) -> usize {
+    number_strs.iter()
+        .map(|&s| {
+            let mut s_arr: Vec<char> = s.chars().collect();
+            s_arr.sort_by(|a, b| a.cmp(b));
+            s_arr.into_iter().collect::<String>()
+        })
+        .map(|str| lookup.get(&str).unwrap())
+        .fold(0usize, |acc, &val| acc * 10 + usize::from(val))
+}
+
+fn create_lookup_table(numbers: HashMap<u8, &str>) -> HashMap<String, u8> {
+    numbers.iter()
+        .map(|(n, str)| (str, n))
+        .fold(HashMap::new(), |mut acc, (&key, &val)| {
+            let mut key_arr: Vec<char> = key.chars().collect();
+            key_arr.sort_by(|a, b| a.cmp(b));
+            let key_sorted = key_arr.into_iter().collect();
+            acc.insert(key_sorted, val);
+            acc
+        })
+}
+
+fn decode_numbers_from(notes: Vec<&str>) -> HashMap<u8, &str> {
+    let mut numbers: HashMap<u8, &str> = HashMap::new();
+    for &note in &notes {
+        if note.len() == 2 {
+            numbers.insert(1, note);
+        } else if note.len() == 4 {
+            numbers.insert(4, note);
+        } else if note.len() == 3 {
+            numbers.insert(7, note);
+        } else if note.len() == 7 {
+            numbers.insert(8, note);
+        }
+    }
+
+    for &note in &notes {
+        if note.len() == 6 {
+            let common_count_to_four = calc_common_to(&4, note, &numbers);
+            if common_count_to_four == 4 {
+                numbers.insert(9, note);
+            } else {
+                let common_count_to_one = calc_common_to(&1, note, &numbers);
+                if common_count_to_one == 2 {
+                    numbers.insert(0, note);
+                } else {
+                    numbers.insert(6, note);
+                }
+            }
+        } else if note.len() == 5 {
+            let common_count_to_one = calc_common_to(&1, note, &numbers);
+            if common_count_to_one == 2 {
+                numbers.insert(3, note);
+            } else {
+                let common_count_to_four = calc_common_to(&4, note, &numbers);
+                if common_count_to_four == 3 {
+                    numbers.insert(5, note);
+                } else {
+                    numbers.insert(2, note);
+                }
+            }
+        }
+    }
+    numbers
 }
 
 fn calc_common_to(key: &u8, note: &str, lookup: &HashMap<u8, &str>) -> usize {
