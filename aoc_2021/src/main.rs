@@ -14,6 +14,7 @@ mod day_8;
 mod day_9;
 mod day_10;
 mod day_11;
+mod day_13;
 
 fn main() {
     let start = Instant::now();
@@ -28,6 +29,7 @@ fn main() {
     execute_day(9, day_9::task_a, day_9::task_b);
     execute_day(10, day_10::task_a, day_10::task_b);
     execute_day(11, day_11::task_a, day_11::task_b);
+    execute_day(13, day_13::task_a, day_13::task_b);
     let end = Instant::now();
     eprintln!("duration = {:#?}", end.duration_since(start));
 }
