@@ -38,7 +38,7 @@ impl FoldState {
         let mut folded_dots = self.dots.iter()
             .clone()
             .filter(|(x, _)| *x > fold_line)
-            .map(|(x, y)| (self.x_len.checked_sub(*x).expect("whoops"), *y))
+            .map(|(x, y)| (fold_line - (*x - fold_line), *y))
             .collect::<Vec<Point>>();
         dots_left_of_fold.append(&mut folded_dots);
         let new_dots = dots_left_of_fold.iter()
@@ -63,7 +63,7 @@ impl FoldState {
         let mut folded_dots = self.dots.iter()
             .clone()
             .filter(|(_, y)| *y > fold_line)
-            .map(|(x, y)| (*x, self.y_len.checked_sub(*y).expect("whoops")))
+            .map(|(x, y)| (*x, fold_line - (*y - fold_line)))
             .collect::<Vec<Point>>();
         dots_above_fold.append(&mut folded_dots);
         let new_dots = dots_above_fold.iter()
