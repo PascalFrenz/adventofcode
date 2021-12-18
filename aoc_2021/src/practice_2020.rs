@@ -164,7 +164,7 @@ fn parse_to_vector(contents: String) -> Vec<i32> {
 #[allow(dead_code)]
 pub fn task_11() {
     let start = Instant::now();
-    let input = read_input_file("resources/input11_2020.txt");
+    let input = read_input_file("resources/input11_2020.txt").expect("lulz did not work");
     let result_state = calculate_stable_state(&input);
     println!("Result: {} occupied seats", result_state.occupied_seats());
 
