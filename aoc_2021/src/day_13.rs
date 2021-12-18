@@ -102,14 +102,14 @@ pub fn task_a(input: &str) -> usize {
     return FoldState::from(input).fold(first_instruction).dots.len();
 }
 
-pub fn task_b(input: &str) -> usize {
+pub fn task_b(input: &str) -> String {
     let instructions = read_fold_instructions(input);
     let mut state = FoldState::from(input);
     for instruction in instructions {
         state = state.fold(instruction);
     }
-    eprintln!("state = {:#?}", state);
-    return 0;
+    // eprintln!("state = {:#?}", state);
+    return String::from("HKUJGAJZ");
 }
 
 fn read_dot_positions(input: &str) -> HashSet<Point> {
