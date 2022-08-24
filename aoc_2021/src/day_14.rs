@@ -1,16 +1,11 @@
-use std::borrow::Borrow;
-use std::collections::{BTreeSet, HashMap, HashSet};
-use std::iter::Map;
+use std::collections::{HashMap};
 use std::ops::Div;
 use std::str;
-use std::time::Instant;
 
 type Position = usize;
 type Polymer = String;
 
 type Ruleset = HashMap<Polymer, String>;
-type Positions = HashSet<Position>;
-type PolymerState = String;
 
 pub fn task_a(input: &str) -> usize {
     let init_template = parse_template(input);
@@ -96,7 +91,7 @@ fn parse_ruleset(input: &str) -> Ruleset {
     input.lines()
         .skip(2)
         .map(|line| {
-            let mut split = line.split(" -> ").collect::<Vec<_>>();
+            let split = line.split(" -> ").collect::<Vec<_>>();
             (split[0], split[1])
         })
         .fold(HashMap::new(), |mut acc, (key, val)| {
