@@ -12,8 +12,8 @@ struct FoldState {
 impl FoldState {
     pub fn from(input: &str) -> Self {
         let dots = read_dot_positions(input);
-        let x_len = *dots.iter().map(|(x, _)| x).max().expect("Did not find x len");
-        let y_len = *dots.iter().map(|(_, y)| y).max().expect("Did not find y len");
+        let x_len = dots.iter().map(|(x, _)| *x).max().expect("Did not find x len");
+        let y_len = dots.iter().map(|(_, y)| *y).max().expect("Did not find y len");
         FoldState {
             dots,
             x_len,
@@ -49,7 +49,7 @@ impl FoldState {
 
         return FoldState {
             dots: new_dots,
-            x_len: fold_line - 1,
+            x_len: fold_line,
             y_len: self.y_len,
         };
     }
@@ -75,7 +75,7 @@ impl FoldState {
         return FoldState {
             dots: new_dots,
             x_len: self.x_len,
-            y_len: fold_line - 1,
+            y_len: fold_line,
         };
     }
 }
@@ -170,14 +170,17 @@ mod tests {
     fn test_fold_vertically() {
         let input = "1,1\n4,1\n6,1";
         let fold: Point = (3, 1);
-        let dut = FoldState::from(input);
-        assert_eq!(HashSet::from([(0, 1), (1, 1), (2, 1)]), dut.fold_vertical(fold).dots)
+        let state_after_fold = FoldState::from(input).fold_vertical(fold);
+        assert_eq!(HashSet::from([(0, 1), (1, 1), (2, 1)]), state_after_fold.dots);
+        assert_eq!(3, state_after_fold.x_len);
     }
 
     #[test]
     fn test_fold_horizontally() {
-        let input = "1,1\n1,4\n1,6";
+        let input = "1,1\n1,4\n1,6\n0,5\n2,5";
         let fold: Point = (1, 3);
-        assert_eq!(HashSet::from([(1, 0), (1, 1), (1, 2)]), FoldState::from(input).fold_horizontal(fold).dots)
+        let state_after_fold = FoldState::from(input).fold_horizontal(fold);
+        assert_eq!(HashSet::from([(1, 0), (1, 1), (1, 2), (0, 1), (2, 1)]), state_after_fold.dots);
+        assert_eq!(3, state_after_fold.y_len);
     }
 }
