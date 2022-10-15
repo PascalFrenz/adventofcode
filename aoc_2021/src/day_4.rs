@@ -15,7 +15,7 @@ trait Playable {
 
 impl Playable for Game {
     fn new(input: &str) -> Game {
-        let input_state = input.split("\n\n").collect::<Vec<&str>>();
+        let input_state: Vec<_> = input.split_whitespace().collect();
         let mut not_drawn_numbers: Vec<u64> = input_state.first()
             .unwrap()
             .split(',')
@@ -81,7 +81,7 @@ impl Game {
         let mut next = line_iter.next().unwrap();
         let mut board: Board = Vec::new();
         while !next.is_empty() {
-            let board_row: Vec<Number> = next.split(' ')
+            let board_row: Vec<Number> = next.split_ascii_whitespace()
                 .filter(|s| !s.is_empty())
                 .map(|n| (n.parse().unwrap(), false))
                 .collect::<Vec<Number>>();
