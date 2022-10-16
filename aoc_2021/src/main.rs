@@ -1,7 +1,7 @@
 use std::fmt::Debug;
+use std::fs;
 use std::time::Instant;
 
-mod util;
 mod day_1;
 mod day_2;
 mod day_3;
@@ -58,10 +58,8 @@ fn main() {
 }
 
 fn execute_day<T, R>(day: usize, a: fn(&str) -> T, b: fn(&str) -> R) where T: Debug, R: Debug {
-    let input = util::read_input_file(&format!("resources/input{:?}.txt", day));
-    if input.is_ok() {
-        println!("Result for day {:?}, task a: {:?}", day, a(input.clone().unwrap().trim()));
-        println!("Result for day {:?}, task b: {:?}", day, b(input.clone().unwrap().trim()));
+    if let Some(input) = fs::read_to_string(&format!("resources/input{:?}.txt", day)).ok() {
+        println!("Result for day {:?}\n\ttask a: {:?}\n\ttask b: {:?}", day, a(input.clone().trim()), b(input.clone().trim()));
     } else {
         println!("Input for day {:?} was not present, skipping...", day);
     }
