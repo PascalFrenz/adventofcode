@@ -1,7 +1,6 @@
 use std::fmt::Debug;
 use std::time::Instant;
 
-mod practice_2020;
 mod util;
 mod day_1;
 mod day_2;
