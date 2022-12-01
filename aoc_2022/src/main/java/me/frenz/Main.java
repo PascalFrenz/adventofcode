@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ public class Main {
     private static Map<Integer, Day<?, ?>> loadDays() {
         final HashMap<Integer, Day<?, ?>> days = new HashMap<>();
         days.put(1, new Day01(loadInput(1)));
+        days.put(2, new Day02(loadInput(2)));
         return days;
     }
 
@@ -45,6 +47,9 @@ public class Main {
             return r.lines().collect(toList());
         } catch (IOException e) {
             throw new UncheckedIOException(e);
+        } catch (NullPointerException e) {
+            System.err.println("Could not load file" + fileName);
+            return Collections.emptyList();
         }
     }
 }
