@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group 'me.frenz'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // create ascii tables
+    implementation 'com.github.freva:ascii-table:1.8.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+test {
+    useJUnitPlatform()
+}
