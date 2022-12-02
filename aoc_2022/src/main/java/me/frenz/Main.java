@@ -1,6 +1,8 @@
 package me.frenz;
 
 import com.github.freva.asciitable.AsciiTable;
+import me.frenz.day01.Day01;
+import me.frenz.day02.Day02;
 
 import java.io.BufferedReader;
 import java.io.IOException;

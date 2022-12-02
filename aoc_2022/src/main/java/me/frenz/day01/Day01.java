@@ -1,4 +1,6 @@
-package me.frenz;
+package me.frenz.day01;
+
+import me.frenz.Day;
 
 import java.util.Comparator;
 import java.util.List;
@@ -6,12 +8,12 @@ import java.util.Stack;
 
 public class Day01 extends Day<Integer, Integer> {
 
-    Day01(List<String> input) {
+    public Day01(List<String> input) {
         super(input);
     }
 
     @Override
-    Integer part1() {
+    protected Integer part1() {
         return getCaloriesPerElve()
                 .stream()
                 .max(Integer::compareTo)
@@ -19,7 +21,7 @@ public class Day01 extends Day<Integer, Integer> {
     }
 
     @Override
-    Integer part2() {
+    protected Integer part2() {
         return getCaloriesPerElve()
                 .stream()
                 .sorted(Comparator.reverseOrder())

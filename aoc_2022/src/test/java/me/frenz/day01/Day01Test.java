@@ -1,4 +1,4 @@
-package me.frenz;
+package me.frenz.day01;
 
 import org.junit.jupiter.api.Test;
 
