@@ -4,6 +4,7 @@ import com.github.freva.asciitable.AsciiTable;
 import me.frenz.day01.Day01;
 import me.frenz.day02.Day02;
 import me.frenz.day03.Day03;
+import me.frenz.day04.Day04;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,6 +38,7 @@ public class Main {
         days.put(1, new Day01(loadInput(1)));
         days.put(2, new Day02(loadInput(2)));
         days.put(3, new Day03(loadInput(3)));
+        days.put(4, new Day04(loadInput(4)));
         return days;
     }
 

@@ -14,18 +14,24 @@ class Day04Test {
     @BeforeEach
     void setUp() {
         String EXAMPLE_INPUT = """
+                2-4,6-8
+                2-3,4-5
+                5-7,7-9
+                2-8,3-7
+                6-6,4-6
+                2-6,4-8
                 """;
         dut = new Day04(EXAMPLE_INPUT.lines().collect(Collectors.toList()));
     }
 
     @Test
     void part1() {
-        assertEquals(-1, dut.part1());
+        assertEquals(2, dut.part1());
     }
 
     @Test
     void part2() {
-        assertEquals(-1, dut.part2());
+        assertEquals(4, dut.part2());
     }
 
 }
