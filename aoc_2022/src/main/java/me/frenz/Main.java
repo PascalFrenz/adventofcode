@@ -40,7 +40,7 @@ public class Main {
         days.put(2, new Day02(loadInput(2)));
         days.put(3, new Day03(loadInput(3)));
         days.put(4, new Day04(loadInput(4)));
-        days.put(5, new Day05(loadInput(4)));
+        days.put(5, new Day05(loadInput(5)));
         return days;
     }
 
