@@ -8,9 +8,11 @@ import me.frenz.day04.Day04;
 import me.frenz.day05.Day05;
 import me.frenz.day06.Day06;
 import me.frenz.day07.Day07;
+import me.frenz.day08.Day08;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
 import java.util.Collections;
@@ -45,6 +47,7 @@ public class Main {
         days.put(5, new Day05(loadInput(5)));
         days.put(6, new Day06(loadInput(6)));
         days.put(7, new Day07(loadInput(7)));
+        days.put(8, new Day08(loadInput(8)));
         return days;
     }
 
@@ -55,12 +58,18 @@ public class Main {
         }
         String fileName = "day" + paddedDay + ".txt";
 
-        try (BufferedReader r = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(fileName)))) {
-            return r.lines().collect(toList());
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        } catch (NullPointerException e) {
-            System.err.println("Could not load file" + fileName);
+        final InputStream in = ClassLoader.getSystemResourceAsStream(fileName);
+        if (in != null) {
+            try (BufferedReader r = new BufferedReader(new InputStreamReader(in))) {
+                return r.lines().collect(toList());
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
+            } catch (NullPointerException e) {
+                System.err.println("Could not load file" + fileName);
+                return Collections.emptyList();
+            }
+        } else {
+            System.err.println("Could not load file " + fileName);
             return Collections.emptyList();
         }
     }
