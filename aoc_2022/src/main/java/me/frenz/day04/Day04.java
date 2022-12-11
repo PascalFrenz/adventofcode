@@ -1,6 +1,7 @@
 package me.frenz.day04;
 
 import me.frenz.Day;
+import me.frenz.Pair;
 
 import java.util.HashSet;
 import java.util.List;

@@ -13,11 +13,13 @@ public class Day08 extends Day<Integer, Integer> {
 
     @Override
     protected Integer part1() {
-        return -1;
+        final Forest forest = new Forest(input);
+        return forest.countVisibleTrees();
     }
 
     @Override
     protected Integer part2() {
-        return -1;
+        final Forest forest = new Forest(input);
+        return forest.getHighestScenicScore();
     }
 }

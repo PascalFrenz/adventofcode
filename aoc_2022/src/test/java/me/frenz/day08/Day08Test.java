@@ -15,17 +15,22 @@ class Day08Test {
     @BeforeEach
     void setUp() {
         String EXAMPLE_INPUT = """
+                30373
+                25512
+                65332
+                33549
+                35390
                 """;
         dut = new Day08(EXAMPLE_INPUT.lines().collect(Collectors.toList()));
     }
 
     @Test
     void part1() {
-        assertEquals(15, dut.part1());
+        assertEquals(21, dut.part1());
     }
 
     @Test
     void part2() {
-        assertEquals(12, dut.part2());
+        assertEquals(8, dut.part2());
     }
 }
