@@ -9,12 +9,9 @@ import me.frenz.day05.Day05;
 import me.frenz.day06.Day06;
 import me.frenz.day07.Day07;
 import me.frenz.day08.Day08;
+import me.frenz.day09.Day09;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UncheckedIOException;
+import java.io.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +45,7 @@ public class Main {
         days.put(6, new Day06(loadInput(6)));
         days.put(7, new Day07(loadInput(7)));
         days.put(8, new Day08(loadInput(8)));
+        days.put(9, new Day09(loadInput(9)));
         return days;
     }
 
