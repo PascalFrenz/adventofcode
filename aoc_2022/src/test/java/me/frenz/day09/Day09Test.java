@@ -1,18 +1,17 @@
 package me.frenz.day09;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Day09Test {
-    private Day09 dut;
 
-    @BeforeEach
-    void setUp() {
-        String EXAMPLE_INPUT = """
+    @Test
+    void part1() {
+        final List<String> input = """
                 R 4
                 U 4
                 L 3
@@ -21,18 +20,22 @@ class Day09Test {
                 D 1
                 L 5
                 R 2
-                """;
-        dut = new Day09(EXAMPLE_INPUT.lines().collect(Collectors.toList()));
-    }
-
-    @Test
-    void part1() {
-        assertEquals(-1, dut.part1());
+                """.lines().collect(Collectors.toList());
+        assertEquals(13, new Day09(input).part1());
     }
 
     @Test
     void part2() {
-        assertEquals(-1, dut.part2());
+        List<String> largerInput = """
+                R 5
+                U 8
+                L 8
+                D 3
+                R 17
+                D 10
+                L 25
+                U 20
+                """.lines().collect(Collectors.toList());
+        assertEquals(36, new Day09(largerInput).part2());
     }
-
 }
