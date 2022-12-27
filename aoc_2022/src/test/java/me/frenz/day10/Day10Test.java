@@ -165,12 +165,28 @@ class Day10Test {
 
     @Test
     void part1() {
-        assertEquals(-1, dut.part1());
+        assertEquals(13140, dut.part1());
     }
 
     @Test
     void part2() {
-        assertEquals(-1, dut.part2());
+        assertEquals("""
+                ##..##..##..##..##..##..##..##..##..##..
+                ###...###...###...###...###...###...###.
+                ####....####....####....####....####....
+                #####.....#####.....#####.....#####.....
+                ######......######......######......####
+                #######.......#######.......#######.....
+                """, dut.part2());
     }
 
+    @Test
+    void testSmallExample() {
+        String input = """
+                noop
+                addx 3
+                addx -5
+                """;
+        dut = new Day10(input.lines().collect(Collectors.toList()));
+    }
 }
