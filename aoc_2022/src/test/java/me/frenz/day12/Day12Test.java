@@ -31,6 +31,6 @@ class Day12Test {
 
     @Test
     void part2() {
-        assertEquals(-1, dut.part2());
+        assertEquals(29, dut.part2());
     }
 }
