@@ -13,6 +13,16 @@ class Day13Test {
 
     private Day13 dut;
 
+    private static IntPacket intPacket(int value) {
+        return new IntPacket(value);
+    }
+
+    private static ContainerPacket containerPacket(final PacketValue ...packets) {
+        return new ContainerPacket(
+                List.of(packets)
+        );
+    }
+
     @BeforeEach
     void setUp() {
         String EXAMPLE_INPUT = """
@@ -49,15 +59,15 @@ class Day13Test {
         final ContainerPacket result = new ContainerPacket();
         parser.parsePacket(result, "[1,1,3,1,1]");
         assertNotNull(result);
-        assertEquals(new ContainerPacket(List.of(
-                new ContainerPacket(List.of(
-                        new IntPacket(1),
-                        new IntPacket(1),
-                        new IntPacket(3),
-                        new IntPacket(1),
-                        new IntPacket(1)
+        assertEquals(containerPacket(
+                containerPacket(
+                        intPacket(1),
+                        intPacket(1),
+                        intPacket(3),
+                        intPacket(1),
+                        intPacket(1)
                 )
-        ))), result);
+        ), result);
     }
 
     @Test
@@ -66,16 +76,12 @@ class Day13Test {
         final ContainerPacket result = new ContainerPacket();
         parser.parsePacket(result,"[[1],[2,3,4]]");
         assertNotNull(result);
-        assertEquals(new ContainerPacket(List.of(
-                new ContainerPacket(List.of(
-                        new ContainerPacket(
-                                List.of(new IntPacket(1))
-                        ),
-                        new ContainerPacket(
-                                List.of(new IntPacket(2), new IntPacket(3), new IntPacket(4))
-                        )
+        assertEquals(containerPacket(
+                containerPacket(
+                        containerPacket(intPacket(1)),
+                        containerPacket(intPacket(2), intPacket(3), intPacket(4))
                 )
-        ))), result);
+        ), result);
     }
 
     @Test
@@ -84,17 +90,39 @@ class Day13Test {
         final ContainerPacket result = new ContainerPacket();
         parser.parsePacket(result,"[[8,7,6]]");
         assertNotNull(result);
-        assertEquals(new ContainerPacket(List.of(
-                new ContainerPacket(List.of(
-                        new ContainerPacket(
-                                List.of(
-                                        new IntPacket(8),
-                                        new IntPacket(7),
-                                        new IntPacket(6)
-                                )
+        assertEquals(containerPacket(
+                containerPacket(
+                        containerPacket(
+                                intPacket(8),
+                                intPacket(7),
+                                intPacket(6)
                         )
                 )
-        ))), result);
+        ), result);
+    }
+
+    @Test
+    void givenTwoInts_ifLeftIsSmaller_shouldReturnOne() {
+        final int result = dut.compare(intPacket(0), intPacket(1));
+        assertEquals(1, result);
+    }
+
+    @Test
+    void givenTwoInts_ifRightIsSmaller_shouldReturnMinusOne() {
+        final int result = dut.compare(intPacket(1), intPacket(0));
+        assertEquals(-1, result);
+    }
+
+    @Test
+    void givenOneIntAndOneList_whenComparing_shouldConvertToListAndCompareInts_RightOrder() {
+        final int result = dut.compare(intPacket(0), containerPacket(intPacket(1)));
+        assertEquals(1, result);
+    }
+
+    @Test
+    void givenOneIntAndOneList_whenComparing_shouldConvertToListAndCompareInts_WrongOrder() {
+        final int result = dut.compare(containerPacket(intPacket(1)), intPacket(0));
+        assertEquals(-1, result);
     }
 
     @Test

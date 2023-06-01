@@ -18,21 +18,17 @@ public class Day13 extends Day<Integer, Integer> {
     @Override
     protected Integer part1() {
         final List<Pair<PacketValue>> parseInput = parseInput();
-        int sum = 0;
-        int i = 0;
-        boolean done = false;
-        while (!done) {
+        final List<Integer> sum = new ArrayList<>(parseInput.size());
+        for (int i = 0; i < parseInput.size(); i++) {
             final Pair<PacketValue> packets = parseInput.get(i);
-            final PacketValue left = packets.left();
-            final PacketValue right = packets.right();
+            final PacketValue left = packets.left(), right = packets.right();
 
-            i++;
-            if (left.compareTo(right) > 0) {
-                sum += i;
+            if (compare(left, right) > 0) {
+                sum.add(i + 1);
             }
-            done = i >= parseInput.size();
         }
-        return sum;
+
+        return sum.stream().reduce(Integer::sum).orElse(-1);
     }
 
     @Override
@@ -56,5 +52,27 @@ public class Day13 extends Day<Integer, Integer> {
         return packetPairs;
     }
 
-
+    int compare(PacketValue left, PacketValue right) {
+        if (left instanceof IntPacket li && right instanceof IntPacket ri) {
+            return Integer.compare(ri.get(), li.get());
+        } else if (left instanceof IntPacket li && right instanceof ContainerPacket rc) {
+            return compare(new ContainerPacket(List.of(li)), rc);
+        } else if (left instanceof ContainerPacket lc && right instanceof IntPacket ri) {
+            return compare(lc, new ContainerPacket(List.of(ri)));
+        } else if (left instanceof ContainerPacket lc && right instanceof ContainerPacket rc) {
+            int areEqual = 0; // 0 means continue checking
+            final int leftSize = lc.get().size();
+            final int rightSize = rc.get().size();
+            for (int i = 0; i < leftSize; i++) {
+                if (i >= rightSize) {
+                    areEqual = -1;
+                    break;
+                }
+                areEqual = compare(lc.get().get(i), rc.get().get(i));
+            }
+            return rightSize > leftSize ? 1 : areEqual;
+        } else {
+            throw new IllegalArgumentException("This should never happen");
+        }
+    }
 }

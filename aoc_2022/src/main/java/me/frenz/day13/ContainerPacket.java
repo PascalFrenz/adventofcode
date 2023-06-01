@@ -3,7 +3,7 @@ package me.frenz.day13;
 import java.util.ArrayList;
 import java.util.List;
 
-class ContainerPacket extends PacketValue implements Comparable<PacketValue> {
+class ContainerPacket extends PacketValue {
     private final List<PacketValue> packets;
 
     ContainerPacket() {
@@ -45,24 +45,7 @@ class ContainerPacket extends PacketValue implements Comparable<PacketValue> {
         return packets.toString();
     }
 
-    @Override
-    public int compareTo(PacketValue o) {
-        if (o instanceof ContainerPacket other) {
-            int compareResult = 0;
-            for (int i = 0; compareResult == 0 && i < this.packets.size(); i++) {
-                if (other.packets.size() <= i) {
-                    compareResult = -1;
-                } else {
-                    final PacketValue l = this.packets.get(i);
-                    final PacketValue r = other.packets.get(i);
-                    compareResult = l.compareTo(r);
-                }
-            }
-            return compareResult == 0 ? 1 : compareResult;
-        } else if (o instanceof IntPacket i) {
-            return this.compareTo(new ContainerPacket(List.of(i)));
-        } else {
-            throw new UnsupportedOperationException("Cannot compare with type: " + o.getClass().getName());
-        }
+    public List<PacketValue> get() {
+        return packets;
     }
 }

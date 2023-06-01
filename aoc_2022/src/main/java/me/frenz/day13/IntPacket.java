@@ -1,8 +1,6 @@
 package me.frenz.day13;
 
-import java.util.List;
-
-class IntPacket extends PacketValue implements Comparable<PacketValue> {
+class IntPacket extends PacketValue {
     private final int value;
 
     IntPacket(int value) {
@@ -34,16 +32,5 @@ class IntPacket extends PacketValue implements Comparable<PacketValue> {
     @Override
     public String toString() {
         return String.valueOf(value);
-    }
-
-    @Override
-    public int compareTo(PacketValue o) {
-        if (o instanceof IntPacket other) {
-            return Integer.compare(other.value, value);
-        } else if (o instanceof ContainerPacket c) {
-            return new ContainerPacket(List.of(this)).compareTo(c);
-        } else {
-            throw new IllegalArgumentException("Unknown type to compare against! " + o.getClass().getName());
-        }
     }
 }
