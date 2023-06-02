@@ -192,7 +192,7 @@ internal class Day13Test {
 
     @Test
     fun part2() {
-        assertEquals(-1, dut!!.part2())
+        assertEquals(140, dut!!.part2())
     }
 
     companion object {

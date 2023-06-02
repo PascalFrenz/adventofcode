@@ -24,12 +24,20 @@ class Day13(input: List<String>) : Day<Int?, Int?>(input.filter(String::isNotBla
     }
 
     public override fun part2(): Int {
-        return -1
+        input.add("[[2]]")
+        input.add("[[6]]")
+
+        val sortedPackets = input.map(packetParser::parsePacket).sortedWith(::compare).reversed()
+        val dividerOneIdx = sortedPackets.indexOf(DIVIDER_ONE) + 1
+        val dividerTwoIdx = sortedPackets.indexOf(DIVIDER_TWO) + 1
+
+        return dividerOneIdx * dividerTwoIdx
     }
 
     private fun parseInput(): List<Pair<PacketValue>> {
         assert(input.size % 2 == 0) { "Input lines not divisible by two! Got %s lines".format(input.size) }
-        return input.windowed(2, step = 2)
+        return input
+            .windowed(2, step = 2)
             .map { Pair(packetParser.parsePacket(it[0]), packetParser.parsePacket(it[1])) }
             .toList()
     }
@@ -64,5 +72,10 @@ class Day13(input: List<String>) : Day<Int?, Int?>(input.filter(String::isNotBla
             idx == rPackets && idx != lPackets -> -1
             else -> 0
         }
+    }
+
+    internal companion object {
+        val DIVIDER_ONE = ContainerPacket(listOf(ContainerPacket(listOf(IntPacket(2)))))
+        val DIVIDER_TWO = ContainerPacket(listOf(ContainerPacket(listOf(IntPacket(6)))))
     }
 }
