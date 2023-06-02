@@ -1,36 +1,24 @@
-package me.frenz.day13;
+package me.frenz.day13
 
-class IntPacket extends PacketValue {
-    private final int value;
-
-    IntPacket(int value) {
-        this.value = value;
+internal class IntPacket(private val value: Int) : PacketValue() {
+    fun get(): Int {
+        return value
     }
 
-    int get() {
-        return value;
+    override fun add(child: PacketValue?) {
+        throw UnsupportedOperationException("Cannot add children to IntPacket")
     }
 
-    @Override
-    void add(PacketValue child) {
-        throw new UnsupportedOperationException("Cannot add children to IntPacket");
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        return if (other !is IntPacket) false else value == other.value
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof IntPacket intPacket)) return false;
-
-        return value == intPacket.value;
+    override fun hashCode(): Int {
+        return value
     }
 
-    @Override
-    public int hashCode() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(value);
+    override fun toString(): String {
+        return value.toString()
     }
 }

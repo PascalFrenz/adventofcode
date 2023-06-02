@@ -1,34 +1,40 @@
-package me.frenz.day13;
+package me.frenz.day13
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*
 
-class PacketParser {
+internal class PacketParser {
 
-    private final Pattern number = Pattern.compile("^(\\d+)\\D*");
+    fun parsePacket(packet: String): PacketValue {
+        val stack = Stack<PacketValue>()
+        stack.push(ContainerPacket())
 
-    String parsePacket(PacketValue packet, String line) {
-        while (!line.isBlank()) {
-            if (line.startsWith("[")) {
-                ContainerPacket childs = new ContainerPacket();
-                line = parsePacket(childs, line.substring(1));
-                packet.add(childs);
-            }
-            if (line.startsWith("]")) {
-                return line.substring(1);
-            }
-            final Matcher m = number.matcher(line);
-
-            if (m.find()) {
-                int num = Integer.parseInt(m.group(1));
-                packet.add(new IntPacket(num));
-                line = line.substring(m.group(1).length());
-            }
-            if (line.startsWith(",")) {
-                line = line.substring(1);
+        var dupPacket = packet
+        while (dupPacket.isNotEmpty()) {
+            when (dupPacket[0]) {
+                '[' -> {
+                    stack.push(ContainerPacket())
+                    dupPacket = dupPacket.substring(1)
+                }
+                ']' -> {
+                    val topItem = stack.pop()
+                    (stack.peek() as ContainerPacket).add(topItem)
+                    dupPacket = dupPacket.substring(1)
+                }
+                ',' -> {
+                    dupPacket = dupPacket.substring(1)
+                }
+                else -> {
+                    // it's a digit
+                    val digString = StringBuilder()
+                    var i = 0
+                    while (dupPacket[i].isDigit()) {
+                        digString.append(dupPacket[i++])
+                    }
+                    (stack.peek() as ContainerPacket).add(IntPacket(digString.toString().toInt()))
+                    dupPacket = dupPacket.substring(digString.length)
+                }
             }
         }
-
-        return null;
+        return (stack.pop() as ContainerPacket).unwrap()
     }
 }

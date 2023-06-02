@@ -1,51 +1,36 @@
-package me.frenz.day13;
+package me.frenz.day13
 
-import java.util.ArrayList;
-import java.util.List;
+internal class ContainerPacket : PacketValue {
+    private val packets: MutableList<PacketValue?>
 
-class ContainerPacket extends PacketValue {
-    private final List<PacketValue> packets;
+    fun get(): List<PacketValue?> = packets
 
-    ContainerPacket() {
-        this(new ArrayList<>());
+    constructor() : this(ArrayList())
+
+    constructor(packets: List<PacketValue?>) : super() {
+        this.packets = ArrayList(packets)
     }
 
-    ContainerPacket(List<PacketValue> packets) {
-        this.packets = packets;
-    }
-
-    ContainerPacket unwrap() {
-        assert packets.size() == 1;
-        if (packets.get(0) instanceof ContainerPacket inner) {
-            return inner;
+    fun unwrap(): ContainerPacket {
+        assert(packets.size == 1)
+        with(packets[0]) {
+            when (this) {
+                is ContainerPacket -> return this
+                else -> throw IllegalStateException("Did not find inner container packet to unwrap")
+            }
         }
-        throw new IllegalStateException("Did not find inner container packet to unwrap");
     }
 
-    @Override
-    void add(PacketValue child) {
-        packets.add(child);
+    override fun add(child: PacketValue?) {
+        packets.add(child)
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ContainerPacket that)) return false;
-
-        return packets.equals(that.packets);
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        return if (other !is ContainerPacket) false else packets == other.packets
     }
 
-    @Override
-    public int hashCode() {
-        return packets.hashCode();
-    }
+    override fun hashCode(): Int = packets.hashCode()
 
-    @Override
-    public String toString() {
-        return packets.toString();
-    }
-
-    public List<PacketValue> get() {
-        return packets;
-    }
+    override fun toString(): String = packets.toString()
 }
