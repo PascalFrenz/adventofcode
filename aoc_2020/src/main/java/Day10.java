@@ -1,6 +1,5 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.math.BigInteger;
+import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -20,6 +19,8 @@ public class Day10 {
         final Map<Integer, Integer> differences = getJoltageDifferences(fullScenario);
         System.out.println(differences);
         System.out.println(differences.get(1) * differences.get(3));
+
+        System.out.printf("Part two: %s", part2(fullScenario).toString());
     }
 
     private static Map<Integer, Integer> getJoltageDifferences(final int[] sortedAdapters) {
@@ -29,8 +30,22 @@ public class Day10 {
             int curr = sortedAdapters[i];
             int next = sortedAdapters[i + 1];
             int diff = next - curr;
-            differences.compute(diff, (key, val) -> val = val != null ? val + 1 : 1);
+            differences.compute(diff, (key, val) -> val != null ? val + 1 : 1);
         }
         return differences;
+    }
+
+    private static BigInteger part2(final int[] sortedAdapters) {
+        final Map<Integer, BigInteger> routes = new HashMap<>();
+        routes.put(0, BigInteger.ONE);
+        for (int i = 1; i < sortedAdapters.length; i++) {
+            final int adapterValue = sortedAdapters[i];
+
+            final BigInteger nextElem = routes.getOrDefault(adapterValue - 1, BigInteger.ZERO)
+                    .add(routes.getOrDefault(adapterValue - 2, BigInteger.ZERO))
+                    .add(routes.getOrDefault(adapterValue - 3, BigInteger.ZERO));
+            routes.put(adapterValue, nextElem);
+        }
+        return routes.get(Arrays.stream(sortedAdapters).max().orElse(-1) - 3);
     }
 }
