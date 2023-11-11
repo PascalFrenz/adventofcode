@@ -1,6 +1,6 @@
 package me.frenz.day06;
 
-import me.frenz.Util;
+import me.frenz.Day;
 
 import java.util.HashSet;
 import java.util.List;
@@ -11,34 +11,30 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Day06 {
+public class Day06 extends Day<Integer, Integer> {
 
     public static final String ABC = "abcdefghijklmnopqrstuvwxyz";
 
-    public static void main(String[] args) {
-        final List<String> inputA = Util.readFile(Day06.class, "day06.txt")
-                .orElse(Stream.empty())
-                .collect(Collectors.toList());
+    public Day06(List<String> input) {
+        super(input);
+    }
 
-        int sumAll = calculateSum(
-                inputA,
+    @Override
+    protected Integer part1() {
+        return calculateSum(
+                input,
                 HashSet::new,
                 (groupAnswers, input) -> groupAnswers.addAll(input.transform(Day06::toCharacterList))
         );
+    }
 
-        System.out.println(sumAll);
-
-        final List<String> inputB = Util.readFile(Day06.class, "day06.txt")
-                .orElse(Stream.empty())
-                .collect(Collectors.toList());
-
-        final int sumIntersection = calculateSum(
-                inputB,
+    @Override
+    protected Integer part2() {
+        return calculateSum(
+                input,
                 () -> new HashSet<>(ABC.transform(Day06::toCharacterList)),
                 (groupAnswers, input) -> groupAnswers.retainAll(input.transform(Day06::toCharacterList))
         );
-
-        System.out.println(sumIntersection);
     }
 
     private static int calculateSum(

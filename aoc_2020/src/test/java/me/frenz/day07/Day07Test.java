@@ -31,14 +31,14 @@ class Day07Test {
 
     @Test
     void testFindBag() {
-        final Map<String, Day07.Bag> bagMap = Day07.getBagMap(exampleInput);
+        final Map<String, Bag> bagMap = Day07.getBagMap(exampleInput);
         final Set<String> actual = Day07.findBags("shiny gold", bagMap, new HashSet<>());
         assertEquals(4, actual.size());
     }
 
     @Test
     void testCountInnerBags() {
-        final Map<String, Day07.Bag> bagMap = Day07.getBagMap(exampleInput);
+        final Map<String, Bag> bagMap = Day07.getBagMap(exampleInput);
         final long actual = Day07.countInnerBags("shiny gold", bagMap);
         assertEquals(32, actual);
     }

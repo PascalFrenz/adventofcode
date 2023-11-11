@@ -8,29 +8,29 @@ class Day05Test {
 
     @Test
     void testReadBoardingPass_GivenExamples() {
-        assertEquals(new Day05.BoardingPass(44, 5), Day05.BoardingPass.from("FBFBBFFRLR"));
-        assertEquals(new Day05.BoardingPass(70, 7), Day05.BoardingPass.from("BFFFBBFRRR"));
-        assertEquals(new Day05.BoardingPass(14, 7), Day05.BoardingPass.from("FFFBBBFRRR"));
-        assertEquals(new Day05.BoardingPass(102, 4), Day05.BoardingPass.from("BBFFBBFRLL"));
+        assertEquals(new BoardingPass(44, 5), BoardingPass.from("FBFBBFFRLR"));
+        assertEquals(new BoardingPass(70, 7), BoardingPass.from("BFFFBBFRRR"));
+        assertEquals(new BoardingPass(14, 7), BoardingPass.from("FFFBBBFRRR"));
+        assertEquals(new BoardingPass(102, 4), BoardingPass.from("BBFFBBFRLL"));
     }
 
     @Test
     void testReadBoardingPass_InputValidation() {
         assertDoesNotThrow(() -> {
-            Day05.BoardingPass.from("BFFFBBFRRR");
+            BoardingPass.from("BFFFBBFRRR");
         });
         assertDoesNotThrow(() -> {
-            Day05.BoardingPass.from("FFFBBBFRRR");
+            BoardingPass.from("FFFBBBFRRR");
         });
         assertDoesNotThrow(() -> {
-            Day05.BoardingPass.from("BBFFBBFRLL");
+            BoardingPass.from("BBFFBBFRLL");
         });
 
-        assertThrows(IllegalArgumentException.class, () -> Day05.BoardingPass.from("BFFFBBFRRa")); // wrong char in last 3
-        assertThrows(IllegalArgumentException.class, () -> Day05.BoardingPass.from("FFFBBFRRL")); // too short
-        assertThrows(IllegalArgumentException.class, () -> Day05.BoardingPass.from("BFFFBBFRBL")); // wrong char in last 3
-        assertThrows(IllegalArgumentException.class, () -> Day05.BoardingPass.from("BFFFBBFRRLL")); // too long
-        assertThrows(IllegalArgumentException.class, () -> Day05.BoardingPass.from("BFFFBBFRRLa")); // too long and wrong char
+        assertThrows(IllegalArgumentException.class, () -> BoardingPass.from("BFFFBBFRRa")); // wrong char in last 3
+        assertThrows(IllegalArgumentException.class, () -> BoardingPass.from("FFFBBFRRL")); // too short
+        assertThrows(IllegalArgumentException.class, () -> BoardingPass.from("BFFFBBFRBL")); // wrong char in last 3
+        assertThrows(IllegalArgumentException.class, () -> BoardingPass.from("BFFFBBFRRLL")); // too long
+        assertThrows(IllegalArgumentException.class, () -> BoardingPass.from("BFFFBBFRRLa")); // too long and wrong char
     }
 
     @Test

@@ -6,7 +6,7 @@ public abstract class Day<T, R> {
 
     protected final List<String> input;
 
-    protected Day(List<String> input) {
+    public Day(List<String> input) {
         this.input = input;
     }
 

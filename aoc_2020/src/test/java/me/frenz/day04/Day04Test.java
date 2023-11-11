@@ -30,7 +30,7 @@ class Day04Test {
 
     @Test
     void testGetPassports_GivenExample() {
-        final Iterator<String> passports = Day04.getPassports(exampleInput).iterator();
+        final Iterator<String> passports = new Day04(exampleInput).getPassports().iterator();
         assertEquals("ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm", passports.next());
         assertEquals("iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884 hcl:#cfa07d byr:1929", passports.next());
         assertEquals("hcl:#ae17e1 iyr:2013 eyr:2024 ecl:brn pid:760753108 byr:1931 hgt:179cm", passports.next());
@@ -40,7 +40,7 @@ class Day04Test {
 
     @Test
     void testCountValidPassports_givenExample() {
-        final List<String> passports = Day04.getPassports(exampleInput);
-        assertEquals(2, Day04.countCompletePassports(passports));
+        final Day04 dut = new Day04(exampleInput);
+        assertEquals(2, dut.countCompletePassports());
     }
 }
