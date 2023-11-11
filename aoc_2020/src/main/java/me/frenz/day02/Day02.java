@@ -1,4 +1,4 @@
-package me.frenz.day2;
+package me.frenz.day02;
 
 import me.frenz.Util;
 
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class Day2 {
+public class Day02 {
 
     private record PasswordRule(int min, int max, char character) {
 
@@ -34,7 +34,7 @@ public class Day2 {
     }
 
     public static void main(String[] args) {
-        final Optional<Stream<String>> inputA = Util.readFile(Day2.class, "input2.txt");
+        final Optional<Stream<String>> inputA = Util.readFile(Day02.class, "day02.txt");
 
         inputA.ifPresent(stringStream -> {
             long validPasswordCount = stringStream
@@ -45,7 +45,7 @@ public class Day2 {
             System.out.printf("Es wurden %d valide Passwörter gefunden (Sled Rental Place)\n", validPasswordCount);
         });
 
-        final Optional<Stream<String>> inputB = Util.readFile(Day2.class, "input4.txt");
+        final Optional<Stream<String>> inputB = Util.readFile(Day02.class, "day04.txt");
 
         inputB.ifPresent(stringStream -> {
             long validPasswordCount = stringStream

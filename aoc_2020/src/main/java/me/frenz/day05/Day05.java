@@ -1,4 +1,4 @@
-package me.frenz.day5;
+package me.frenz.day05;
 
 import lombok.Value;
 import me.frenz.Util;
@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Day5 {
+public class Day05 {
 
     public static void main(String[] args) {
         solveA();
@@ -17,7 +17,7 @@ public class Day5 {
     }
 
     private static void solveA() {
-        final Optional<Stream<String>> inputA = Util.readFile(Day5.class, "input5.txt");
+        final Optional<Stream<String>> inputA = Util.readFile(Day05.class, "day05.txt");
 
         inputA.orElse(Stream.empty())
                 .map(BoardingPass::from)
@@ -27,7 +27,7 @@ public class Day5 {
     }
 
     private static void solveB() {
-        final Optional<Stream<String>> inputB = Util.readFile(Day5.class, "input5.txt");
+        final Optional<Stream<String>> inputB = Util.readFile(Day05.class, "day05.txt");
 
         final List<Integer> seats = inputB.orElse(Stream.empty())
                 .map(BoardingPass::from)

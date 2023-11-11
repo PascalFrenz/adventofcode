@@ -1,4 +1,4 @@
-package me.frenz.day3;
+package me.frenz.day03;
 
 import me.frenz.Util;
 
@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Day3 {
+public class Day03 {
 
     private static final char TREE = '#';
 
     public static void main(String[] args) {
-        final List<char[]> forest = Util.readFile(Day3.class, "input3.txt")
+        final List<char[]> forest = Util.readFile(Day03.class, "day03.txt")
                 .map(stream -> stream.map(String::toCharArray))
                 .map(stream -> stream.collect(Collectors.toList()))
                 .orElse(new ArrayList<>());

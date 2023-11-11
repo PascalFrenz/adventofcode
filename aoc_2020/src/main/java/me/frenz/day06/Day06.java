@@ -1,4 +1,4 @@
-package me.frenz.day6;
+package me.frenz.day06;
 
 import me.frenz.Util;
 
@@ -11,31 +11,31 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Day6 {
+public class Day06 {
 
     public static final String ABC = "abcdefghijklmnopqrstuvwxyz";
 
     public static void main(String[] args) {
-        final List<String> inputA = Util.readFile(Day6.class, "input6.txt")
+        final List<String> inputA = Util.readFile(Day06.class, "day06.txt")
                 .orElse(Stream.empty())
                 .collect(Collectors.toList());
 
         int sumAll = calculateSum(
                 inputA,
                 HashSet::new,
-                (groupAnswers, input) -> groupAnswers.addAll(input.transform(Day6::toCharacterList))
+                (groupAnswers, input) -> groupAnswers.addAll(input.transform(Day06::toCharacterList))
         );
 
         System.out.println(sumAll);
 
-        final List<String> inputB = Util.readFile(Day6.class, "input6.txt")
+        final List<String> inputB = Util.readFile(Day06.class, "day06.txt")
                 .orElse(Stream.empty())
                 .collect(Collectors.toList());
 
         final int sumIntersection = calculateSum(
                 inputB,
-                () -> new HashSet<>(ABC.transform(Day6::toCharacterList)),
-                (groupAnswers, input) -> groupAnswers.retainAll(input.transform(Day6::toCharacterList))
+                () -> new HashSet<>(ABC.transform(Day06::toCharacterList)),
+                (groupAnswers, input) -> groupAnswers.retainAll(input.transform(Day06::toCharacterList))
         );
 
         System.out.println(sumIntersection);

@@ -1,4 +1,4 @@
-package me.frenz.day4;
+package me.frenz.day04;
 
 import me.frenz.Util;
 
@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Day4 {
+public class Day04 {
 
     public static final String BYR = "byr";
     public static final String IYR = "iyr";
@@ -17,7 +17,7 @@ public class Day4 {
     public static final String PID = "pid";
 
     public static void main(String[] args) {
-        final Optional<Stream<String>> input = Util.readFile(Day4.class, "input4.txt");
+        final Optional<Stream<String>> input = Util.readFile(Day04.class, "day04.txt");
 
         final List<String> lines = input.orElse(Stream.empty()).collect(Collectors.toList());
 

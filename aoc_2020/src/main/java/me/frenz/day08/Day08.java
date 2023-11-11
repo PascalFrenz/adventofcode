@@ -1,4 +1,4 @@
-package me.frenz.day8;
+package me.frenz.day08;
 
 import lombok.Getter;
 import me.frenz.Util;
@@ -7,10 +7,10 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class Day8 {
+public class Day08 {
 
     public static void main(String[] args) {
-        final String[] instructions = Util.readFile(Day8.class, "input8.txt").orElse(Stream.empty()).toArray(String[]::new);
+        final String[] instructions = Util.readFile(Day08.class, "day08.txt").orElse(Stream.empty()).toArray(String[]::new);
 
         final long lastAccuValueBeforeLoop = new Console(instructions).executeNormally();
         System.out.println("Accumulator value before second execution: " + lastAccuValueBeforeLoop);

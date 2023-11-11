@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public class Day10 {
 
     public static void main(String[] args) {
-        final int[] sortedAdapters = Util.readFile(Day10.class, "input10.txt")
+        final int[] sortedAdapters = Util.readFile(Day10.class, "day10.txt")
                 .orElse(Stream.empty())
                 .mapToInt(Integer::valueOf)
                 .sorted()

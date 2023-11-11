@@ -1,4 +1,4 @@
-package me.frenz.day7;
+package me.frenz.day07;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class Day7Test {
+class Day07Test {
 
     Stream<String> exampleInput;
 
@@ -31,15 +31,15 @@ class Day7Test {
 
     @Test
     void testFindBag() {
-        final Map<String, Day7.Bag> bagMap = Day7.getBagMap(exampleInput);
-        final Set<String> actual = Day7.findBags("shiny gold", bagMap, new HashSet<>());
+        final Map<String, Day07.Bag> bagMap = Day07.getBagMap(exampleInput);
+        final Set<String> actual = Day07.findBags("shiny gold", bagMap, new HashSet<>());
         assertEquals(4, actual.size());
     }
 
     @Test
     void testCountInnerBags() {
-        final Map<String, Day7.Bag> bagMap = Day7.getBagMap(exampleInput);
-        final long actual = Day7.countInnerBags("shiny gold", bagMap);
+        final Map<String, Day07.Bag> bagMap = Day07.getBagMap(exampleInput);
+        final long actual = Day07.countInnerBags("shiny gold", bagMap);
         assertEquals(32, actual);
     }
 }

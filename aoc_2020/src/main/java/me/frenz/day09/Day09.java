@@ -1,18 +1,18 @@
-package me.frenz.day9;
+package me.frenz.day09;
 
 import me.frenz.Util;
-import me.frenz.day8.Day8;
+import me.frenz.day08.Day08;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Day9 {
+public class Day09 {
 
 
     public static final int WINDOW_SIZE = 25;
 
     public static void main(String[] args) {
-        final long[] numbers = Util.readFile(Day8.class, "input9.txt")
+        final long[] numbers = Util.readFile(Day08.class, "day09.txt")
                 .orElse(Stream.empty())
                 .mapToLong(Long::valueOf)
                 .toArray();
