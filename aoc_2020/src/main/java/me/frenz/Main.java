@@ -2,6 +2,8 @@ package me.frenz;
 
 import com.github.freva.asciitable.AsciiTable;
 import me.frenz.day01.Day01;
+import me.frenz.day02.Day02;
+import me.frenz.day03.Day03;
 
 import java.io.*;
 import java.util.Collections;
@@ -30,6 +32,8 @@ public class Main {
     private static Map<Integer, Day<?, ?>> loadDays() {
         final HashMap<Integer, Day<?, ?>> days = new HashMap<>();
         days.put(1, new Day01(loadInput(1)));
+        days.put(2, new Day02(loadInput(2)));
+        days.put(3, new Day03(loadInput(3)));
         return days;
     }
 
