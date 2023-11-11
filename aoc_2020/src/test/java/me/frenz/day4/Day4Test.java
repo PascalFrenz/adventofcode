@@ -1,3 +1,5 @@
+package me.frenz.day4;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;

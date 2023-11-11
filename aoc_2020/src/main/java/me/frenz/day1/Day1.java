@@ -1,4 +1,6 @@
+package me.frenz.day1;
 
+import me.frenz.Util;
 
 import java.util.Arrays;
 import java.util.Optional;

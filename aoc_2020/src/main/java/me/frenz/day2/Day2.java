@@ -1,3 +1,7 @@
+package me.frenz.day2;
+
+import me.frenz.Util;
+
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;

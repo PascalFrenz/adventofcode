@@ -1,3 +1,7 @@
+package me.frenz.day3;
+
+import me.frenz.Util;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

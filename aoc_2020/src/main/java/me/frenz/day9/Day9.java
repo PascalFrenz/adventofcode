@@ -1,3 +1,8 @@
+package me.frenz.day9;
+
+import me.frenz.Util;
+import me.frenz.day8.Day8;
+
 import java.util.Arrays;
 import java.util.stream.Stream;
 

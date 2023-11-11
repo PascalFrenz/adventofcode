@@ -1,3 +1,7 @@
+package me.frenz.day4;
+
+import me.frenz.Util;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

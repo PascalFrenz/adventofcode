@@ -1,6 +1,9 @@
+package me.frenz.day10;
+
+import me.frenz.Util;
+
 import java.math.BigInteger;
 import java.util.*;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 

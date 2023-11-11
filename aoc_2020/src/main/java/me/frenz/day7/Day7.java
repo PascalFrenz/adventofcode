@@ -1,4 +1,7 @@
+package me.frenz.day7;
+
 import lombok.Value;
+import me.frenz.Util;
 
 import java.util.*;
 import java.util.function.Function;
@@ -10,14 +13,14 @@ public class Day7 {
     public static final String SHINY_GOLD = "shiny gold";
 
     public static void main(String[] args) {
-        final Stream<String> input = Util.readFile(Day5.class, "input7.txt").orElse(Stream.empty());
+        final Stream<String> input = Util.readFile(Day7.class, "input7.txt").orElse(Stream.empty());
         final Map<String, Bag> bags = getBagMap(input);
 
         System.out.println("Number of paths to the shiny gold bag: " + findBags(SHINY_GOLD, bags, new HashSet<>()).size());
         System.out.println("Number of inner bags: " + countInnerBags(SHINY_GOLD, bags));
     }
 
-    public static Map<String, Bag> getBagMap(Stream<String> input) {
+    static Map<String, Bag> getBagMap(Stream<String> input) {
         return input.map(Bag::from).collect(Collectors.toMap(Bag::getName, Function.identity()));
     }
 

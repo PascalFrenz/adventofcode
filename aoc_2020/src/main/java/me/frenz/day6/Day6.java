@@ -1,3 +1,7 @@
+package me.frenz.day6;
+
+import me.frenz.Util;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +16,7 @@ public class Day6 {
     public static final String ABC = "abcdefghijklmnopqrstuvwxyz";
 
     public static void main(String[] args) {
-        final List<String> inputA = Util.readFile(Day5.class, "input6.txt")
+        final List<String> inputA = Util.readFile(Day6.class, "input6.txt")
                 .orElse(Stream.empty())
                 .collect(Collectors.toList());
 
@@ -24,7 +28,7 @@ public class Day6 {
 
         System.out.println(sumAll);
 
-        final List<String> inputB = Util.readFile(Day5.class, "input6.txt")
+        final List<String> inputB = Util.readFile(Day6.class, "input6.txt")
                 .orElse(Stream.empty())
                 .collect(Collectors.toList());
 
