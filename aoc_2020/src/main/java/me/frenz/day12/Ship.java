@@ -11,10 +11,19 @@ public class Ship {
 
     private Direction currentlyFacing;
 
+    @Getter
+    private int waypointNorth;
+
+    @Getter
+    private int waypointEast;
+
     public Ship(int north, int east) {
         this.north = north;
         this.east = east;
         this.currentlyFacing = Direction.EAST;
+
+        this.waypointNorth = 1;
+        this.waypointEast = 10;
     }
 
     public int manhattanDistance() {
@@ -41,6 +50,44 @@ public class Ship {
             }
             default -> throw new IllegalArgumentException("Unknown command! %s".formatted(command));
         }
+    }
+
+    public void moveWithWaypoint(String command) {
+        final String cmdDir = command.substring(0, 1);
+        final int steps = Integer.parseInt(command.substring(1));
+        switch (cmdDir) {
+            case "N" -> this.waypointNorth += steps;
+            case "S" -> this.waypointNorth -= steps;
+            case "E" -> this.waypointEast += steps;
+            case "W" -> this.waypointEast -= steps;
+            case "L" -> rotateWaypointLeft(steps);
+            case "R" -> rotateWaypointRight(steps);
+            case "F" -> {
+                this.north += this.waypointNorth * steps;
+                this.east += this.waypointEast * steps;
+            }
+            default -> throw new IllegalArgumentException("Unknown command! %s".formatted(command));
+        }
+    }
+
+    private void rotateWaypointLeft(int degrees) {
+        if (degrees == 0) {
+            return;
+        }
+        int newNorth = this.waypointEast;
+        this.waypointEast = this.waypointNorth * -1; // invert north to become west
+        this.waypointNorth = newNorth;
+        rotateWaypointLeft(degrees - 90);
+    }
+
+    private void rotateWaypointRight(int degrees) {
+        if (degrees == 0) {
+            return;
+        }
+        int newNorth = this.waypointEast * -1; // invert east to become new north
+        this.waypointEast = this.waypointNorth;
+        this.waypointNorth = newNorth;
+        rotateWaypointRight(degrees - 90);
     }
 
     private Direction turnRight(final Direction currentDirection, int degrees) {

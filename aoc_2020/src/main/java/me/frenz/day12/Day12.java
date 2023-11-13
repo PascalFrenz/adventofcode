@@ -18,6 +18,8 @@ public class Day12 extends Day<Integer, Integer> {
 
     @Override
     protected Integer part2() {
-        return 0;
+        final Ship ship = new Ship(0, 0);
+        input.forEach(ship::moveWithWaypoint);
+        return ship.manhattanDistance();
     }
 }
