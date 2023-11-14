@@ -13,6 +13,7 @@ import me.frenz.day09.Day09;
 import me.frenz.day10.Day10;
 import me.frenz.day11.Day11;
 import me.frenz.day12.Day12;
+import me.frenz.day13.Day13;
 
 import java.io.*;
 import java.util.Collections;
@@ -41,18 +42,19 @@ public class Main {
     private static Map<Integer, Day<?, ?>> loadDays() {
         final HashMap<Integer, Day<?, ?>> days = new HashMap<>();
         int day = 0;
-        days.put(1, new Day01(loadInput(++day)));
-        days.put(2, new Day02(loadInput(++day)));
-        days.put(3, new Day03(loadInput(++day)));
-        days.put(4, new Day04(loadInput(++day)));
-        days.put(5, new Day05(loadInput(++day)));
-        days.put(6, new Day06(loadInput(++day)));
-        days.put(7, new Day07(loadInput(++day)));
-        days.put(8, new Day08(loadInput(++day)));
-        days.put(9, new Day09(loadInput(++day)));
-        days.put(10, new Day10(loadInput(++day)));
-        days.put(11, new Day11(loadInput(++day)));
-        days.put(12, new Day12(loadInput(++day)));
+        days.put(++day, new Day01(loadInput(day)));
+        days.put(++day, new Day02(loadInput(day)));
+        days.put(++day, new Day03(loadInput(day)));
+        days.put(++day, new Day04(loadInput(day)));
+        days.put(++day, new Day05(loadInput(day)));
+        days.put(++day, new Day06(loadInput(day)));
+        days.put(++day, new Day07(loadInput(day)));
+        days.put(++day, new Day08(loadInput(day)));
+        days.put(++day, new Day09(loadInput(day)));
+        days.put(++day, new Day10(loadInput(day)));
+        days.put(++day, new Day11(loadInput(day)));
+        days.put(++day, new Day12(loadInput(day)));
+        days.put(++day, new Day13(loadInput(day)));
         return days;
     }
 
