@@ -14,6 +14,7 @@ import me.frenz.day10.Day10;
 import me.frenz.day11.Day11;
 import me.frenz.day12.Day12;
 import me.frenz.day13.Day13;
+import me.frenz.day14.Day14;
 
 import java.io.*;
 import java.util.Collections;
@@ -55,6 +56,7 @@ public class Main {
         days.put(++day, new Day11(loadInput(day)));
         days.put(++day, new Day12(loadInput(day)));
         days.put(++day, new Day13(loadInput(day)));
+        days.put(++day, new Day14(loadInput(day)));
         return days;
     }
 
