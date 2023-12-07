@@ -21,8 +21,14 @@ class HandTest {
 
     @Test
     void testCompareHands() {
-        assertTrue(Hand.from("KK677 28").compareTo(Hand.from("KTJJT 220")) > 0);
-        assertTrue(Hand.from("QQQJA 483").compareTo(Hand.from("T55J5 684")) > 0);
-        assertEquals(0, Hand.from("QQQQQ 483").compareTo(Hand.from("QQQQQ 684")));
+        assertTrue(Hand.comparator().compare(Hand.from("KK677 28"), Hand.from("KTJJT 220")) > 0);
+        assertTrue(Hand.comparator().compare(Hand.from("QQQJA 483"), Hand.from("T55J5 684")) > 0);
+        assertEquals(0, Hand.comparator().compare(Hand.from("QQQQQ 483"), Hand.from("QQQQQ 684")));
+    }
+
+    @Test
+    void testCompareHandsWithJoker() {
+        assertTrue(Hand.comparatorWithJoker().compare(Hand.from("KTJJT 220"), Hand.from("QQQJA 483")) > 0);
+        assertTrue(Hand.comparatorWithJoker().compare(Hand.from("QQQJA 483"), Hand.from("T55J5 684")) > 0);
     }
 }
