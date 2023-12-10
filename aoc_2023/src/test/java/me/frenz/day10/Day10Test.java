@@ -46,7 +46,9 @@ class Day10Test {
                 .L--J.L--J.
                 ...........
                 """.lines().toList();
-        assertEquals(4, new Day10(input).part2());
+        final Day10 day10 = new Day10(input);
+        assertEquals(4, day10.part2());
+        assertEquals("F", day10.findStartSymbol());
     }
 
     @Test
@@ -64,5 +66,22 @@ class Day10Test {
                 ....L---J.LJ.LJLJ...
                 """.lines().toList();
         assertEquals(8, new Day10(input).part2());
+    }
+
+    @Test
+    void testExampleB3() {
+        final List<String> input = """
+                FF7FSF7F7F7F7F7F---7
+                L|LJ||||||||||||F--J
+                FL-7LJLJ||||||LJL-77
+                F--JF--7||LJLJ7F7FJ-
+                L---JF-JLJ.||-FJLJJ7
+                |F|F-JF---7F7-L7L|7|
+                |FFJF7L7F-JF7|JL---7
+                7-L-JL7||F7|L7F-7F7|
+                L.L7LFJ|||||FJL7||LJ
+                L7JLJL-JLJLJL--JLJ.L
+                """.lines().toList();
+        assertEquals(10, new Day10(input).part2());
     }
 }

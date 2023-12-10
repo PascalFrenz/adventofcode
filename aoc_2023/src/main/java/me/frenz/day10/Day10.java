@@ -11,6 +11,8 @@ public class Day10 extends Day<Integer, Integer> {
     private final HashMap<Coord, String> coords = new HashMap<>();
     private final HashMap<String, List<Coord>> pipes = new HashMap<>();
     private final Set<Coord> visited = new HashSet<>();
+    private final String startSymbol;
+    private final Coord startingPosition;
 
     public Day10(List<String> input) {
         super(input);
@@ -25,22 +27,22 @@ public class Day10 extends Day<Integer, Integer> {
                 pipes.get(chars[col]).add(new Coord(col, row));
             }
         }
+
+        startSymbol = findStartSymbol();
+        startingPosition = findStartingPosition();
+        coords.put(startingPosition, startSymbol);
     }
 
     @Override
     protected Integer part1() {
-        final Coord startingPosition = findStartingPosition();
-
         Stack<Coord> toVisit = new Stack<>();
         toVisit.add(startingPosition);
         int steps = 0;
         do {
             final Coord currentPosition = toVisit.pop();
             visited.add(currentPosition);
-            final List<Coord> nextPositions = getNextPositions(currentPosition, visited);
-            if (!nextPositions.isEmpty()) {
-                toVisit.push(nextPositions.getFirst());
-            }
+            final List<Coord> nextPositions = getNextPositions(currentPosition, visited, coords);
+            toVisit.addAll(nextPositions);
             steps++;
         } while (!toVisit.isEmpty() && steps < 1000000);
 
@@ -55,8 +57,10 @@ public class Day10 extends Day<Integer, Integer> {
         for (int line = 0; line < input.size(); line++) {
             for (int column = 0; column < input.get(line).split("").length; column++) {
                 final Coord coord = new Coord(column, line);
-                final int lineCrosses = lineCrosses(coord);
-                result += lineCrosses % 2 == 1 ? 1 : 0;
+                if (!visited.contains(coord)) {
+                    final int lineCrosses = lineCrosses(coord);
+                    result += lineCrosses % 2 == 1 ? 1 : 0;
+                }
             }
         }
         return result;
@@ -67,55 +71,58 @@ public class Day10 extends Day<Integer, Integer> {
         final String[] chars = line.split("");
         final List<String> wallParts = IntStream.range(0, chars.length)
                 .mapToObj(it -> new Coord(it, coord.y()))
+                .filter(visited::contains)
                 .map(coords::get)
-                .filter(it -> !("-".equals(it) || ".".equals(it)))
+                .filter(it -> !("-".equals(it) || ".".equals(it) || "J".equals(it) || "L".equals(it)))
                 .toList();
-        int numOfCrosses = 0;
-        boolean top = false;
-        boolean bottom = false;
-        for (String wallPart : wallParts) {
-            boolean isCrossing = wallPart.equals("|");
-            if (wallPart.equals("J") || wallPart.equals("L")) {
-                if (bottom) {
-                    isCrossing = true;
-                } else {
-                    top = !top;
-                }
-            }
-            if (wallPart.equals("F") || wallPart.equals("7") || wallPart.equals("S")) {
-                if (top) {
-                    isCrossing = true;
-                } else {
-                    bottom = !bottom;
-                }
-            }
-
-            if (isCrossing && !visited.contains(coord)) {
-                numOfCrosses++;
-            }
-        }
-        return numOfCrosses;
+        return wallParts.size();
     }
 
-    private List<Coord> getNextPositions(final Coord currentPosition, final Set<Coord> visited) {
+    private List<Coord> getNextPositions(final Coord currentPosition, final Set<Coord> visited, HashMap<Coord, String> coords) {
         List<Coord> list = new ArrayList<>();
-        for (Coord it : Arrays.asList(
+        final List<Coord> neighbours = Arrays.asList(
                 new Coord(0, -1),
                 new Coord(-1, 0),
                 new Coord(1, 0),
                 new Coord(0, 1)
-        )) {
+        );
+        for (Coord it : neighbours) {
             Coord coord = new Coord(currentPosition.x() + it.x(), currentPosition.y() + it.y());
 
-            if (!"S".equals(coords.get(coord))) {
-                if (this.validMove(currentPosition, it)) {
-                    if (!visited.contains(coord)) {
-                        list.add(coord);
-                    }
-                }
+            if (!"S".equals(coords.get(coord)) && this.validMove(currentPosition, it, coords) && !visited.contains(coord)) {
+                list.add(coord);
             }
         }
         return list;
+    }
+
+    String findStartSymbol() {
+        final Coord startingPosition = findStartingPosition();
+        final List<String> symbols = List.of(
+                "|",
+                "-",
+                "L",
+                "J",
+                "F",
+                "7"
+        );
+        for (String symbol : symbols) {
+            final List<String> startReplaced = input.stream().map(it -> it.replace("S", symbol)).toList();
+            final HashMap<Coord, String> newCoords = new HashMap<>();
+            for (int row = 0; row < startReplaced.size(); row++) {
+                final String line = startReplaced.get(row);
+                final String[] chars = line.split("");
+                for (int col = 0; col < chars.length; col++) {
+                    newCoords.put(new Coord(col, row), chars[col]);
+                }
+            }
+
+            final List<Coord> nextPositions = getNextPositions(startingPosition, new HashSet<>(), newCoords);
+            if (nextPositions.size() == 2) {
+                return symbol;
+            }
+        }
+        throw new IllegalArgumentException("No valid start symbol found");
     }
 
     private Coord findStartingPosition() {
@@ -126,7 +133,7 @@ public class Day10 extends Day<Integer, Integer> {
         return pipes.get("S").getFirst();
     }
 
-    private boolean validMove(Coord from, Coord movement) {
+    private boolean validMove(Coord from, Coord movement, HashMap<Coord, String> coords) {
         final Coord newPos = new Coord(from.x() + movement.x(), from.y() + movement.y());
         if (!coords.containsKey(newPos) || ".".equals(coords.get(newPos))) {
             return false;
@@ -149,4 +156,21 @@ public class Day10 extends Day<Integer, Integer> {
         };
     }
 
+    static record Coord(int x, int y) {
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Coord coord)) return false;
+
+            if (x != coord.x) return false;
+            return y == coord.y;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = x;
+            result = 31 * result + y;
+            return result;
+        }
+    }
 }
