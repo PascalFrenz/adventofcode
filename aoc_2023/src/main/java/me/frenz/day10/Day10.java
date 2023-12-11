@@ -10,8 +10,7 @@ public class Day10 extends Day<Integer, Integer> {
 
     private final HashMap<Coord, String> coords = new HashMap<>();
     private final HashMap<String, List<Coord>> pipes = new HashMap<>();
-    private final Set<Coord> visited = new HashSet<>();
-    private final String startSymbol;
+    private final Map<Coord, Integer> visited = new HashMap<>();
     private final Coord startingPosition;
 
     public Day10(List<String> input) {
@@ -28,36 +27,33 @@ public class Day10 extends Day<Integer, Integer> {
             }
         }
 
-        startSymbol = findStartSymbol();
         startingPosition = findStartingPosition();
-        coords.put(startingPosition, startSymbol);
+        coords.put(startingPosition, findStartSymbol());
     }
 
     @Override
     protected Integer part1() {
+        visited.clear();
         Stack<Coord> toVisit = new Stack<>();
         toVisit.add(startingPosition);
-        int steps = 0;
         do {
             final Coord currentPosition = toVisit.pop();
-            visited.add(currentPosition);
+            visited.put(currentPosition, visited.size());
             final List<Coord> nextPositions = getNextPositions(currentPosition, visited, coords);
             toVisit.addAll(nextPositions);
-            steps++;
-        } while (!toVisit.isEmpty() && steps < 1000000);
+        } while (!toVisit.isEmpty());
 
-        return Math.floorDiv(steps, 2);
+        return visited.size() / 2;
     }
 
     @Override
     protected Integer part2() {
         part1();
-
         int result = 0;
         for (int line = 0; line < input.size(); line++) {
             for (int column = 0; column < input.get(line).split("").length; column++) {
                 final Coord coord = new Coord(column, line);
-                if (!visited.contains(coord)) {
+                if (!visited.containsKey(coord)) {
                     final int lineCrosses = lineCrosses(coord);
                     result += lineCrosses % 2 == 1 ? 1 : 0;
                 }
@@ -71,25 +67,22 @@ public class Day10 extends Day<Integer, Integer> {
         final String[] chars = line.split("");
         final List<String> wallParts = IntStream.range(0, chars.length)
                 .mapToObj(it -> new Coord(it, coord.y()))
-                .filter(visited::contains)
+                .filter(visited::containsKey)
                 .map(coords::get)
                 .filter(it -> !("-".equals(it) || ".".equals(it) || "J".equals(it) || "L".equals(it)))
                 .toList();
         return wallParts.size();
     }
 
-    private List<Coord> getNextPositions(final Coord currentPosition, final Set<Coord> visited, HashMap<Coord, String> coords) {
+    private List<Coord> getNextPositions(final Coord currentPosition, final Map<Coord, Integer> visited, HashMap<Coord, String> coords) {
         List<Coord> list = new ArrayList<>();
-        final List<Coord> neighbours = Arrays.asList(
-                new Coord(0, -1),
-                new Coord(-1, 0),
-                new Coord(1, 0),
-                new Coord(0, 1)
-        );
-        for (Coord it : neighbours) {
-            Coord coord = new Coord(currentPosition.x() + it.x(), currentPosition.y() + it.y());
+        for (Direction direction : Direction.values()) {
+            final Coord coord = direction.move(currentPosition);
 
-            if (!"S".equals(coords.get(coord)) && this.validMove(currentPosition, it, coords) && !visited.contains(coord)) {
+            final boolean isValidMoveTowards = this.validMove(currentPosition, direction, coords);
+            final boolean isValidMoveFrom = this.validMove(direction.move(currentPosition), direction.opposite(), coords);
+
+            if (!visited.containsKey(coord) && isValidMoveTowards && isValidMoveFrom) {
                 list.add(coord);
             }
         }
@@ -117,7 +110,7 @@ public class Day10 extends Day<Integer, Integer> {
                 }
             }
 
-            final List<Coord> nextPositions = getNextPositions(startingPosition, new HashSet<>(), newCoords);
+            final List<Coord> nextPositions = getNextPositions(startingPosition, new HashMap<>(), newCoords);
             if (nextPositions.size() == 2) {
                 return symbol;
             }
@@ -133,44 +126,51 @@ public class Day10 extends Day<Integer, Integer> {
         return pipes.get("S").getFirst();
     }
 
-    private boolean validMove(Coord from, Coord movement, HashMap<Coord, String> coords) {
-        final Coord newPos = new Coord(from.x() + movement.x(), from.y() + movement.y());
+    private boolean validMove(final Coord from, final Direction direction, final HashMap<Coord, String> coords) {
+        final Coord newPos = direction.move(from);
         if (!coords.containsKey(newPos) || ".".equals(coords.get(newPos))) {
             return false;
         }
 
-        if (movement.x() > 0 && movement.y() > 0) {
-            throw new IllegalArgumentException("Cannot move diagonally in one step");
-        }
-
         final String pipe = coords.get(from);
         return switch (pipe) {
-            case "|" -> Math.abs(movement.y()) == 1;
-            case "-" -> Math.abs(movement.x()) == 1;
-            case "L" -> movement.y() == -1 || movement.x() == 1;
-            case "J" -> movement.y() == -1 || movement.x() == -1;
-            case "7" -> movement.y() == 1 || movement.x() == -1;
-            case "F" -> movement.y() == 1 || movement.x() == 1;
+            case "|" -> (direction == Direction.NORTH || direction == Direction.SOUTH);
+            case "-" -> (direction == Direction.EAST || direction == Direction.WEST);
+            case "L" -> (direction == Direction.NORTH || direction == Direction.EAST);
+            case "J" -> (direction == Direction.NORTH || direction == Direction.WEST);
+            case "7" -> (direction == Direction.SOUTH || direction == Direction.WEST);
+            case "F" -> (direction == Direction.SOUTH || direction == Direction.EAST);
             case "S" -> true;
             case null, default -> false;
         };
     }
 
-    static record Coord(int x, int y) {
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Coord coord)) return false;
+    record Coord(int x, int y) { }
 
-            if (x != coord.x) return false;
-            return y == coord.y;
+    enum Direction {
+        NORTH(new Coord(0, -1)),
+        SOUTH(new Coord(0, 1)),
+        EAST(new Coord(1, 0)),
+        WEST(new Coord(-1, 0));
+
+        private final Coord move;
+
+        Direction(final Coord move) {
+            this.move = move;
         }
 
-        @Override
-        public int hashCode() {
-            int result = x;
-            result = 31 * result + y;
-            return result;
+        Coord move(final Coord pos) {
+            return new Coord(pos.x + this.move.x, pos.y + this.move.y);
+        }
+
+        Direction opposite() {
+            return switch (this) {
+                case NORTH -> SOUTH;
+                case SOUTH -> NORTH;
+                case EAST -> WEST;
+                case WEST -> EAST;
+            };
         }
     }
+
 }
