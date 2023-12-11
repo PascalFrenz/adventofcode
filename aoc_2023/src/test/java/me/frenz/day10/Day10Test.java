@@ -40,7 +40,7 @@ class Day10Test {
                 JS7-
                 -LJ|
                 """.lines().toList();
-//        assertEquals(2, new Day10(input).part1());
+        assertEquals(2, new Day10(input).part1());
         assertEquals("F", new Day10(input).findStartSymbol());
         assertEquals(0, new Day10(input).part2());
     }
