@@ -26,18 +26,16 @@ class Day11Test {
     @Test
     void testExpandMap() {
         List<String> expected = """
-                ....#........
-                .........#...
-                #............
-                .............
-                .............
-                ........#....
-                .#...........
-                ............#
-                .............
-                .............
-                .........#...
-                #....#.......
+                ..|#.|..|.
+                ..|..|.#|.
+                #.|..|..|.
+                --|--|--|-
+                ..|..|#.|.
+                .#|..|..|.
+                ..|..|..|#
+                --|--|--|-
+                ..|..|.#|.
+                #.|.#|..|.
                 """.lines().toList();
 
         assertLinesMatch(expected, new Day11(input).expandMap());
@@ -45,11 +43,12 @@ class Day11Test {
 
     @Test
     void testExampleA() {
-        assertEquals(-1, new Day11(input).part1());
+        assertEquals(374, new Day11(input).part1());
     }
 
     @Test
     void testExampleB() {
-        assertEquals(-1, new Day11(input).part2());
+        assertEquals(8410, new Day11(input, 100).part2());
+        assertEquals(1030, new Day11(input, 10).part2());
     }
 }
