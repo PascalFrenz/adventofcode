@@ -10,15 +10,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class Day14Test {
 
     final List<String> input = """
+        O....#....
+        O.OO#....#
+        .....##...
+        OO.#O....O
+        .O.....O#.
+        O.#..O.#.#
+        ..O..#O..O
+        .......O..
+        #....###..
+        #OO..#....
         """.lines().toList();
 
     @Test
     void testExampleA() {
-        assertEquals(-1, new Day14(input).part1());
+        assertEquals(136, new Day14(input).part1());
     }
 
     @Test
     void testExampleB() {
-        assertEquals(-1, new Day14(input).part2());
+        assertEquals(64, new Day14(input).part2());
     }
 }

@@ -13,12 +13,15 @@ public class Day14 extends Day<Integer, Integer> {
 
     @Override
     protected Integer part1() {
-        return 0;
+        final Dish tiltedDish = new Dish(input).tilt(Direction.NORTH);
+        return tiltedDish.calculateLoad();
     }
 
     @Override
     protected Integer part2() {
-        return 0;
+        final Dish dish = new Dish(input);
+        dish.spinDishNCyclesEfficient(1000000000L);
+        return dish.calculateLoad();
     }
 
 }
