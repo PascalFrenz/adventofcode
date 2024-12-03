@@ -3,32 +3,26 @@ package me.frenz.day01;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Day03Test {
 
-    private static final List<String> EXAMPLE_INPUT = """
-            """.lines().toList();
-
-    private Day03 day;
-
     @BeforeEach
     void setUp() {
-        this.day = new Day03(EXAMPLE_INPUT);
     }
 
     @Test
     void testExampleA() {
+        var day = new Day03("xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))".lines().toList());
         var result = day.part1();
-        assertEquals(0, result);
+        assertEquals(161L, result);
     }
 
     @Test
     void testExampleB() {
+        var day  = new Day03("xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))".lines().toList());
         var result = day.part2();
-        assertEquals(0, result);
+        assertEquals(48L, result);
     }
 
 
