@@ -4,6 +4,7 @@ import com.github.freva.asciitable.AsciiTable;
 import me.frenz.day01.Day01;
 import me.frenz.day01.Day02;
 import me.frenz.day01.Day03;
+import me.frenz.day01.Day04;
 
 import java.io.*;
 import java.util.Collections;
@@ -17,7 +18,7 @@ public class Main {
         final String[][] data = loadDays()
                 .entrySet()
                 .stream()
-                .map((dayEntry) -> new String[]{
+                .map(dayEntry -> new String[]{
                         dayEntry.getKey().toString(),
                         dayEntry.getValue().part1().toString(),
                         dayEntry.getValue().part2().toString()
@@ -33,6 +34,7 @@ public class Main {
         days.put(++day, new Day01(loadInput(day)));
         days.put(++day, new Day02(loadInput(day)));
         days.put(++day, new Day03(loadInput(day)));
+        days.put(++day, new Day04(loadInput(day)));
         return days;
     }
 
