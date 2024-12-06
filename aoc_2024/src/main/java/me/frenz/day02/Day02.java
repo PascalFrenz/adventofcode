@@ -1,4 +1,4 @@
-package me.frenz.day01;
+package me.frenz.day02;
 
 import me.frenz.Day;
 

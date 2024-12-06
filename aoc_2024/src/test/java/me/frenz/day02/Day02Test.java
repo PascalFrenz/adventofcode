@@ -1,4 +1,4 @@
-package me.frenz.day01;
+package me.frenz.day02;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
