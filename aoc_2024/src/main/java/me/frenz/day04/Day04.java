@@ -1,9 +1,6 @@
 package me.frenz.day04;
 
-import me.frenz.Day;
-import me.frenz.Direction;
-import me.frenz.Pair;
-import me.frenz.TaskMap;
+import me.frenz.*;
 
 import java.util.*;
 import java.util.function.Function;
@@ -22,7 +19,7 @@ public class Day04 extends Day<Long, Long> {
         var it = map.iterator();
         while (it.hasNext()) {
             var pos = it.next();
-            found += countMatchesAt(map, pos.left(), pos.right(), "XMAS");
+            found += countMatchesAt(map, pos.x(), pos.y(), "XMAS");
         }
 
         return (long) found;
@@ -34,7 +31,12 @@ public class Day04 extends Day<Long, Long> {
         for (Direction dir : Direction.allDirections()) {
             boolean found = true;
             for (int i = 0; i < word.length(); i++) {
-                Character c = map.atRelativeFrom(x, y, dir, i, ' ');
+                Character c = map.atRelativeFrom(
+                        new Position(x, y),
+                        dir,
+                        i,
+                        ' '
+                );
                 if (c != word.charAt(i)) {
                     found = false;
                     break;
@@ -54,21 +56,59 @@ public class Day04 extends Day<Long, Long> {
                 Function.identity()
         );
 
-        Set<Pair<Integer, Integer>> validXes = new HashSet<>();
+        Set<Position> validXes = new HashSet<>();
         var it = map.iterator();
         while (it.hasNext()) {
             var pos = it.next();
-            int x = pos.left();
-            int y = pos.right();
-            if (map.at(x, y, ' ') == 'A') {
-                boolean upLeftM = Objects.equals(map.atRelativeFrom(x, y, Direction.UP_LEFT, 1, '.'), 'M');
-                boolean upLeftS = Objects.equals(map.atRelativeFrom(x, y, Direction.UP_LEFT, 1, '.'), 'S');
-                boolean upRightM = Objects.equals(map.atRelativeFrom(x, y, Direction.UP_RIGHT, 1, '.'), 'M');
-                boolean upRightS = Objects.equals(map.atRelativeFrom(x, y, Direction.UP_RIGHT, 1, '.'), 'S');
-                boolean downLeftM = Objects.equals(map.atRelativeFrom(x, y, Direction.DOWN_LEFT, 1, '.'), 'M');
-                boolean downLeftS = Objects.equals(map.atRelativeFrom(x, y, Direction.DOWN_LEFT, 1, '.'), 'S');
-                boolean downRightM = Objects.equals(map.atRelativeFrom(x, y, Direction.DOWN_RIGHT, 1, '.'), 'M');
-                boolean downRightS = Objects.equals(map.atRelativeFrom(x, y, Direction.DOWN_RIGHT, 1, '.'), 'S');
+            if (map.at(pos, ' ') == 'A') {
+                boolean upLeftM = Objects.equals(map.atRelativeFrom(
+                        pos,
+                        Direction.UP_LEFT,
+                        1,
+                        '.'
+                ), 'M');
+                boolean upLeftS = Objects.equals(map.atRelativeFrom(
+                        pos,
+                        Direction.UP_LEFT,
+                        1,
+                        '.'
+                ), 'S');
+                boolean upRightM = Objects.equals(map.atRelativeFrom(
+                        pos,
+                        Direction.UP_RIGHT,
+                        1,
+                        '.'
+                ), 'M');
+                boolean upRightS = Objects.equals(map.atRelativeFrom(
+                        pos,
+                        Direction.UP_RIGHT,
+                        1,
+                        '.'
+                ), 'S');
+                boolean downLeftM = Objects.equals(map.atRelativeFrom(
+                        pos,
+                        Direction.DOWN_LEFT,
+                        1,
+                        '.'
+                ), 'M');
+                boolean downLeftS = Objects.equals(map.atRelativeFrom(
+                        pos,
+                        Direction.DOWN_LEFT,
+                        1,
+                        '.'
+                ), 'S');
+                boolean downRightM = Objects.equals(map.atRelativeFrom(
+                        pos,
+                        Direction.DOWN_RIGHT,
+                        1,
+                        '.'
+                ), 'M');
+                boolean downRightS = Objects.equals(map.atRelativeFrom(
+                        pos,
+                        Direction.DOWN_RIGHT,
+                        1,
+                        '.'
+                ), 'S');
 
                 boolean validCross = (upLeftM && downRightS && downLeftM && upRightS)
                                      || (upLeftS && downRightM && downLeftS && upRightM)
