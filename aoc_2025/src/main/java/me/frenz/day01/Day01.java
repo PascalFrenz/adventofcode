@@ -13,12 +13,24 @@ public class Day01 extends Day<Integer, Integer> {
 
     @Override
     protected Integer part1() {
-        return 0;
+        var knob = new Knob(50);
+        processInput(knob);
+        return knob.timesExactlyAtZero();
     }
 
     @Override
     protected Integer part2() {
-        return 0;
+        var knob = new Knob(50);
+        processInput(knob);
+        return knob.timesExactlyAtZero() + knob.timesZeroWasCrossed();
+    }
+
+    private void processInput(Knob knob) {
+        for (String line : input) {
+            var direction = line.charAt(0);
+            var amount = Integer.parseInt(line.substring(1));
+            knob.turn(KnobDirection.valueOf(direction), amount);
+        }
     }
 
 }
