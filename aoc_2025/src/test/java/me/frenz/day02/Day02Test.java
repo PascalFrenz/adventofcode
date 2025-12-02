@@ -18,6 +18,6 @@ class Day02Test {
 
     @Test
     void testExampleB() {
-        assertEquals(-1, new Day02(input).part2());
+        assertEquals(4174379265L, new Day02(input).part2());
     }
 }

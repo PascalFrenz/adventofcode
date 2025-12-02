@@ -6,9 +6,9 @@ import me.frenz.Day;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.function.Predicate;
 
-public class Day02 extends Day<Long, Integer> {
+public class Day02 extends Day<Long, Long> {
 
     public Day02(List<String> input) {
         super(input);
@@ -18,14 +18,18 @@ public class Day02 extends Day<Long, Integer> {
     protected Long part1() {
         return Arrays.stream(input.getFirst().split(",")) // whole input is on first line
                 .map(IdRange::from)
-                .flatMap(it -> it.findInvalidIds().stream())
+                .flatMap(it -> it.findInvalidIds(ID::isInvalid).stream())
                 .mapToLong(ID::number)
                 .sum();
     }
 
     @Override
-    protected Integer part2() {
-        return 0;
+    protected Long part2() {
+        return Arrays.stream(input.getFirst().split(",")) // whole input is on first line
+                .map(IdRange::from)
+                .flatMap(it -> it.findInvalidIds(ID::isSuperInvalid).stream())
+                .mapToLong(ID::number)
+                .sum();
     }
 
     record IdRange(ID start, ID end) {
@@ -49,11 +53,11 @@ public class Day02 extends Day<Long, Integer> {
          * Use brute force again. Seems to keep up with the speed
          * @return All invalid IDs in this ID range
          */
-        List<ID> findInvalidIds() {
+        List<ID> findInvalidIds(Predicate<ID> invalid) {
             var result = new ArrayList<ID>();
             var current = this.start;
             while(current.number <= this.end.number) {
-                if (current.isInvalid()) {
+                if (invalid.test(current)) {
                     result.add(current);
                 }
                 current = current.next();
@@ -82,6 +86,27 @@ public class Day02 extends Day<Long, Integer> {
             final var secondHalf = numStr.substring(half);
 
             return firstHalf.equals(secondHalf);
+        }
+
+        /**
+         * Now, an ID is invalid if it is made only of some sequence of digits repeated at least twice.
+         * So, 12341234 (1234 two times), 123123123 (123 three times), 1212121212 (12 five times),
+         * and 1111111 (1 seven times) are all invalid IDs.
+         * @return Whether this id is invalid according to the new rules
+         */
+        boolean isSuperInvalid() {
+            final var numStr = String.valueOf(number);
+            final var len = numStr.length();
+            var idx = 0;
+            while (idx <= len / 2) {
+                final var toCheck = numStr.substring(0, idx);
+                final String afterReplace = numStr.replaceAll(toCheck, "");
+                if (afterReplace.isEmpty()) {
+                    return true;
+                }
+                idx++;
+            }
+            return false;
         }
 
         ID next() {
