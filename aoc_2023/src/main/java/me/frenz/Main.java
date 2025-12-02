@@ -26,7 +26,7 @@ import java.util.Map;
 import static java.util.stream.Collectors.toList;
 
 public class Main {
-    public static void main(String[] args) {
+    void main() {
         final String[] headers = {"Day", "Task A", "Task B"};
         final String[][] data = loadDays()
                 .entrySet()
@@ -41,7 +41,7 @@ public class Main {
         System.out.println(AsciiTable.getTable(headers, data));
     }
 
-    private static Map<Integer, Day<?, ?>> loadDays() {
+    private Map<Integer, Day<?, ?>> loadDays() {
         final HashMap<Integer, Day<?, ?>> days = new HashMap<>();
         int day = 0;
         days.put(++day, new Day01(loadInput(day)));
@@ -62,7 +62,7 @@ public class Main {
         return days;
     }
 
-    private static List<String> loadInput(int day) {
+    private List<String> loadInput(int day) {
         String paddedDay = String.valueOf(day);
         if (day < 10) {
             paddedDay = "0" + day;

@@ -1,4 +1,4 @@
-source .env
+. ./.env
 
 day=$1; shift;
 fileName="";

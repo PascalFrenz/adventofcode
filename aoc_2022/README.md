@@ -1,8 +1,8 @@
-# Advent Of Code 2024
+# Advent Of Code 2022
 
-This is where all the tasks are for the AoC 2024!
+This is where all the tasks are for the AoC 2022!
 
-Language is Java 25.
+Language is Kotlin 2.
 
 ## How to set up the `.env`
 
@@ -14,13 +14,6 @@ SESSION=<YOUR_SESSION_COOKIE>
 
 Get the session cookie from [Advent Of Code](https://adventofcode.com/) by looking into the
 developer tools (F12) > Application > Cookies > `session`
-
-## How to generate a day
-
-Simply execute the following in the root of this directory:
-```shell
-.\gradlew.bat -Pday="01" :generateDay
-```
 
 Now, get the input from the website by executing `fetch-input.sh`
 

@@ -16,11 +16,7 @@ import me.frenz.day12.Day12;
 import me.frenz.day13.Day13;
 import me.frenz.day14.Day14;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UncheckedIOException;
+import java.io.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +25,7 @@ import java.util.Map;
 import static java.util.stream.Collectors.toList;
 
 public class Main {
-    public static void main(String[] args) {
+    void main() {
         final String[] headers = {"Day", "Task A", "Task B"};
         final String[][] data = loadDays()
                 .entrySet()
@@ -44,7 +40,7 @@ public class Main {
         System.out.println(AsciiTable.getTable(headers, data));
     }
 
-    private static Map<Integer, Day<?, ?>> loadDays() {
+    private Map<Integer, Day<?, ?>> loadDays() {
         final HashMap<Integer, Day<?, ?>> days = new HashMap<>();
         days.put(1, new Day01(loadInput(1)));
         days.put(2, new Day02(loadInput(2)));
@@ -63,7 +59,7 @@ public class Main {
         return days;
     }
 
-    private static List<String> loadInput(int day) {
+    private List<String> loadInput(int day) {
         String paddedDay = String.valueOf(day);
         if (day < 10) {
             paddedDay = "0" + day;

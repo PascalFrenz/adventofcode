@@ -25,7 +25,6 @@ Simply execute the following in the root of this directory:
 Now, get the input from the website by executing `fetch-input.sh`
 
 ```shell
-./fetch-input.sh
+# first parameter is the day. Here: 1
+./fetch-input.sh 1
 ```
-
-
