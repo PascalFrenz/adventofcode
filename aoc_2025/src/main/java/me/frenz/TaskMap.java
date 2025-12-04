@@ -1,10 +1,13 @@
 package me.frenz;
 
+import lombok.NonNull;
+
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class TaskMap<T> {
+public class TaskMap<T> implements Iterable<Pair<Position, T>> {
 
     private final Map<Position, T> internalRepresentation = new HashMap<>();
     private final int width;
@@ -49,8 +52,15 @@ public class TaskMap<T> {
         return this.at(new Position(p.x() + d.x() * steps, p.y() + d.y() * steps), orElse);
     }
 
-    public Iterator<Position> iterator() {
-        return internalRepresentation.keySet().iterator();
+    public List<T> checkSurroundings(Position p, T orElse) {
+        if (!isWithinBounds(p)) {
+            return List.of();
+        }
+        final var results = new ArrayList<T>();
+        for (Direction d : Direction.allDirections()) {
+            results.add(this.atRelativeFrom(p, d, 1, orElse));
+        }
+        return results;
     }
 
     public boolean isWithinBounds(Position p) {
@@ -60,5 +70,11 @@ public class TaskMap<T> {
     public TaskMap<T> set(Position obstructionPosition, T c) {
         internalRepresentation.put(obstructionPosition, c);
         return new TaskMap<>(internalRepresentation);
+    }
+
+    @Override
+    @NonNull
+    public Iterator<Pair<Position, T>> iterator() {
+        return internalRepresentation.entrySet().stream().map(e -> new Pair<>(e.getKey(), e.getValue())).iterator();
     }
 }
