@@ -3,6 +3,7 @@ package me.frenz;
 import com.github.freva.asciitable.AsciiTable;
 import me.frenz.day01.Day01;
 import me.frenz.day02.Day02;
+import me.frenz.day03.Day03;
 
 import java.io.*;
 import java.util.Collections;
@@ -31,6 +32,7 @@ public class Main {
         int day = 0;
         days.put(++day, new Day01(loadInput(day)));
         days.put(++day, new Day02(loadInput(day)));
+        days.put(++day, new Day03(loadInput(day)));
         return days;
     }
 
