@@ -1,9 +1,10 @@
 
 package me.frenz.day05;
 
+import lombok.NonNull;
 import me.frenz.Day;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Day05 extends Day<Long, Long> {
@@ -29,11 +30,28 @@ public class Day05 extends Day<Long, Long> {
 
     @Override
     protected Long part2() {
-        return 0L;
+        final var freshIds = input.stream()
+                .takeWhile(it -> !it.isEmpty())
+                .map(Interval::from)
+                .sorted()
+                .collect(Collectors.toCollection(ArrayList::new));
+        final var joinedFreshIds = new Stack<Interval>();
+        joinedFreshIds.add(freshIds.removeFirst());
+        while (!freshIds.isEmpty()) {
+            final var current = freshIds.removeFirst();
+            final var joinedOpt = joinedFreshIds.peek().join(current);
+            if (joinedOpt.isPresent()) {
+                joinedFreshIds.pop();
+                joinedFreshIds.add(joinedOpt.get());
+            } else {
+                joinedFreshIds.add(current);
+            }
+        }
+        return joinedFreshIds.stream().mapToLong(Interval::count).sum();
     }
 
 
-    record Interval(long start, long end) {
+    record Interval(long start, long end) implements Comparable<Interval> {
 
         static Interval from(String string) {
             final var split = string.split("-");
@@ -44,6 +62,32 @@ public class Day05 extends Day<Long, Long> {
 
         boolean contains(long value) {
             return value >= start && value <= end;
+        }
+
+        Optional<Interval> join(Interval other) {
+            if (other.contains(start) && other.contains(end)) {
+                return Optional.of(other);
+            } else if (other.contains(start) && this.contains(other.end)) {
+                return Optional.of(new Interval(other.start, this.end));
+            } else if (this.contains(other.start) && other.contains(end)) {
+                return Optional.of(new Interval(this.start, other.end));
+            } else if (this.contains(other.start) && this.contains(other.end)) {
+                return Optional.of(this);
+            }
+
+            return Optional.empty();
+        }
+
+        long count() {
+            return end - start + 1;
+        }
+
+        @Override
+        public int compareTo(@NonNull Interval other) {
+            return Comparator
+                    .comparingLong(Interval::start)
+                    .thenComparing(Interval::end)
+                    .compare(this, other);
         }
     }
 }
