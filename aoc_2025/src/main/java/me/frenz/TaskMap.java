@@ -75,6 +75,10 @@ public class TaskMap<T> implements Iterable<Pair<Position, T>> {
     @Override
     @NonNull
     public Iterator<Pair<Position, T>> iterator() {
-        return internalRepresentation.entrySet().stream().map(e -> new Pair<>(e.getKey(), e.getValue())).iterator();
+        return internalRepresentation.entrySet()
+                .stream()
+                .map(e -> new Pair<>(e.getKey(), e.getValue()))
+                .sorted(Comparator.comparing(Pair::left))
+                .iterator();
     }
 }
